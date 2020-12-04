@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct Users {
+struct User {
     public let name: String
     public let email: String
     public let url: String?

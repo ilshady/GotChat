@@ -31,7 +31,7 @@ extension UIImageView {
                     if statusCode != 200 {
                         print("dataTaskWithRequest HTTP status code:", statusCode)
                     }
-                }
+                } 
                 DispatchQueue.main.async {
                     if let imageFromUrl = UIImage(data: data!) {
                         imageCache.setObject(imageFromUrl, forKey: urlString as NSString)

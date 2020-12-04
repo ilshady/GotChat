@@ -6,84 +6,95 @@
 //
 
 import UIKit
+import Firebase
+import EasyPeasy
 
 class NewMessageTableViewController: UITableViewController {
+    
+    let cellId = "cellId"
+    var users = [User]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        tableView.register(TableViewCell.self, forCellReuseIdentifier: cellId)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(handleCancel))
+        fetchUser()
     }
+    
+    func fetchUser() {
+            Database.database().reference().child("users").observe(.childAdded) { (snapshot) in
+                if let value = snapshot.value as? NSDictionary  {
+                    let name = value["name"] as? String ?? ""
+                    let email = value["email"] as? String ?? ""
+                    let imageURL = value["url"] as? String ?? ""
 
+                    let user = User(name: name, email: email, url: imageURL)
+                    self.users.append(user)
+                }
+                self.tableView.reloadData()
+            }
+    }
+    
+    @objc func handleCancel() {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    
     // MARK: - Table view data source
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! TableViewCell
+        let user = users[indexPath.row]
+        let urlString = user.url!
+        cell.textLabel?.text = user.name
+        cell.detailTextLabel?.text = user.email
+        
+        cell.profileImageView.loadImages(urlString: urlString)
+        
+        return cell
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        return users.count
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 72
     }
 
-    /*
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+}
 
-        // Configure the cell...
-
-        return cell
+class TableViewCell: UITableViewCell {
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        textLabel?.frame = CGRect(x: profileImageView.frame.maxX+8, y: textLabel!.frame.origin.y-2, width: textLabel!.frame.width, height: textLabel!.frame.height)
+        detailTextLabel?.frame = CGRect(x: profileImageView.frame.maxX+8, y: detailTextLabel!.frame.origin.y+2, width: detailTextLabel!.frame.width, height: detailTextLabel!.frame.height)
     }
-    */
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    
+    var profileImageView: UIImageView = {
+        let image = UIImageView()
+        image.layer.cornerRadius = 26
+        image.layer.masksToBounds = true
+        image.translatesAutoresizingMaskIntoConstraints = true
+        return image
+    }()
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
+        
+        addSubview(profileImageView)
+        
+        profileImageView.easy.layout(
+            Left(8),
+            CenterY(0),
+            Width(52),
+            Height(52)
+        )
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+    
 }
