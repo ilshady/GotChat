@@ -44,32 +44,37 @@ class MessageViewController: UITableViewController {
     }
     
     func loginCheck() {
-        let uid = Auth.auth().currentUser?.uid
-        if uid == nil {
-            perform(#selector(handleLogout), with: nil, afterDelay: 0)
-        } else {
-            Database.database().reference().child("users").child(uid!).observeSingleEvent(of: .value) { (snapshot) in
-                if let dictionary = snapshot.value as? NSDictionary {
-                    let name = dictionary["name"] as? String ?? ""
-                    let email = dictionary["email"] as? String ?? ""
-                    let url = dictionary["url"] as? String ?? ""
-                    
-                    let user = User(name: name, email: email, url: url)
-                    
-                    self.setupNavBar(user: user)
-                    
-                    self.navigationItem.title = dictionary["name"] as? String
+        
+            let uid = Auth.auth().currentUser?.uid
+            if uid == nil {
+                self.perform(#selector(self.handleLogout), with: nil, afterDelay: 0)
+            } else {
+                Database.database().reference().child("users").child(uid!).observeSingleEvent(of: .value) { (snapshot) in
+                    if let dictionary = snapshot.value as? NSDictionary {
+                        let name = dictionary["name"] as? String ?? ""
+                        let email = dictionary["email"] as? String ?? ""
+                        let url = dictionary["url"] as? String ?? ""
+                        
+                        let user = User(name: name, email: email, url: url)
+                        
+                        self.setupNavBar(user: user)
+                        DispatchQueue.main.async {
+                            self.navigationItem.title = dictionary["name"] as? String
+                        }
+                    }
                 }
             }
-        }
+        
+        
     }
     
     func setupNavBar(user: User) {
         
         let titleView = UIView()
-        titleView.frame = CGRect(x: 0, y: 0, width: 150, height: 40)
-        titleView.translatesAutoresizingMaskIntoConstraints = false
+        titleView.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        titleView.heightAnchor.constraint(equalToConstant: 44).isActive = true
         titleView.backgroundColor = .red
+        titleView.translatesAutoresizingMaskIntoConstraints = false
         
         let profileImageView = UIImageView()
         if let urlString = user.url {
@@ -88,7 +93,7 @@ class MessageViewController: UITableViewController {
         titleView.addSubview(nameLabel)
         
         profileImageView.easy.layout(
-            
+            Left(0).to(titleView),
             CenterY(0),
             Width(40),
             Height(40)
@@ -98,9 +103,17 @@ class MessageViewController: UITableViewController {
             Left(10).to(profileImageView),
             CenterY(0)
         )
-        titleView.easy.layout(CenterY(0),CenterX(0))
         
+
         self.navigationItem.titleView = titleView
+        
+        titleView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showChatLog)))
+
+    }
+    
+    @objc func showChatLog() {
+        let chatLog = ChatLogController(collectionViewLayout: UICollectionViewFlowLayout())
+        navigationController?.pushViewController(chatLog, animated: true)
     }
 }
 
