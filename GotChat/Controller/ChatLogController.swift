@@ -100,8 +100,8 @@ class ChatLogController: UICollectionViewController, UITextViewDelegate {
         innerContainerView.easy.layout(
             Left(0).to(containerView,.left),
             Right(0).to(containerView,.right),
-            Height(100),
-            Top()
+            Height(200),
+            Top().to(inputTextView)
         )
         
         separator.easy.layout(
@@ -114,15 +114,15 @@ class ChatLogController: UICollectionViewController, UITextViewDelegate {
         inputTextView.easy.layout(
             Left(8).to(view,.left),
             Top(8).to(containerView,.top),
-            Bottom(0).to(innerContainerView,.bottom),
+            Bottom(8).to(innerContainerView,.bottom),
             Right(0).to(sendButton,.left),
             Height(<=160)
         )
         
         sendButton.easy.layout(
             Right(0).to(containerView,.right),
-            Top(8).to(containerView,.top),
-            Bottom(0).to(innerContainerView,.bottom),
+            //Top(8).to(containerView,.top),
+            Bottom(8).to(innerContainerView,.bottom),
             Width(80),
             Height(40)
         )
