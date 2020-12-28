@@ -10,50 +10,49 @@ import EasyPeasy
 import CoreGraphics
 
 class ChatLogController: UICollectionViewController, UITextViewDelegate {
-    
+
     var viewBottomConstraint: NSLayoutConstraint?
     var innerContainerConstraint: NSLayoutConstraint?
 
-        
+
     override func viewDidLoad() {
         super.viewDidLoad()
-                
+
         navigationItem.title = "Something"
         collectionView.backgroundColor = .white
         inputTextView.delegate = self
-        
+
         setupInputComponents()
-        
+
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification), name: UIResponder.keyboardWillShowNotification, object: nil)
     }
-    
+
     @objc func handleKeyboardNotification(notification: NSNotification) {
         if let userInfo = notification.userInfo {
             if let keyboardFrame = (userInfo["UIKeyboardFrameEndUserInfoKey"] as? NSValue)?.cgRectValue {
                 viewBottomConstraint?.constant = -keyboardFrame.height
-                innerContainerConstraint?.constant = -keyboardFrame.height
             }
         }
     }
-    
+
     let containerView: UIView = {
         let container = UIView()
         container.translatesAutoresizingMaskIntoConstraints = false
         container.backgroundColor = .systemGroupedBackground
         return container
     }()
-    
+
     let innerContainerView: UIView = {
         let container = UIView()
         container.translatesAutoresizingMaskIntoConstraints = false
         container.backgroundColor = .none
         return container
     }()
-    
+
     let inputTextView: UITextView = {
         let input = UITextView()
         input.font = UIFont.systemFont(ofSize: 16)
-        input.textContainerInset.left = 10
+        input.textContainerInset.left = 8
         input.translatesAutoresizingMaskIntoConstraints = false
         input.isEditable = true
         input.layer.cornerRadius = 18
@@ -66,7 +65,7 @@ class ChatLogController: UICollectionViewController, UITextViewDelegate {
         input.isScrollEnabled = false
         return input
     }()
-    
+
     let sendButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Send", for: .normal)
@@ -74,76 +73,60 @@ class ChatLogController: UICollectionViewController, UITextViewDelegate {
         button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
         return button
     }()
-    
+
     let separator: UIView = {
         let sep = UIView()
         sep.translatesAutoresizingMaskIntoConstraints = false
         sep.backgroundColor = .gray
         return sep
     }()
-    
+
     func setupInputComponents() {
-            
+
         let guide = view.safeAreaLayoutGuide
 
         view.addSubview(containerView)
-        containerView.addSubview(innerContainerView)
+
         containerView.addSubview(separator)
-        innerContainerView.addSubview(inputTextView)
-        innerContainerView.addSubview(sendButton)
-                
-        containerView.easy.layout(
-            Left(0).to(view,.left),
-            Width(0).like(view,.width)
-        )
+        containerView.addSubview(inputTextView)
+        containerView.addSubview(sendButton)
         
-        innerContainerView.easy.layout(
-            Left(0).to(containerView,.left),
-            Right(0).to(containerView,.right),
-            Height(200),
-            Top().to(inputTextView)
+        containerView.easy.layout(
+            Left().to(view,.left),
+            Right().to(view,.right)
         )
         
         separator.easy.layout(
-            Left(0).to(containerView,.left),
-            Top(0).to(containerView,.top),
-            Width(0).like(containerView,.width),
+            Left().to(view,.left),
+            Right().to(view,.right),
+            Top().to(containerView,.top),
             Height(0.2)
         )
         
         inputTextView.easy.layout(
-            Left(8).to(view,.left),
+            Left(8).to(containerView,.left),
+            Right().to(sendButton,.left),
             Top(8).to(containerView,.top),
-            Bottom(8).to(innerContainerView,.bottom),
-            Right(0).to(sendButton,.left),
-            Height(<=160)
+            Bottom(8).to(guide,.bottom),
+            Height(<=144.5)
         )
         
         sendButton.easy.layout(
-            Right(0).to(containerView,.right),
-            //Top(8).to(containerView,.top),
-            Bottom(8).to(innerContainerView,.bottom),
-            Width(80),
-            Height(40)
+            Left().to(inputTextView,.right),
+            Right().to(containerView,.right),
+            Bottom(8).to(guide,.bottom),
+            Height(40),
+            Width(80)
         )
-        
-        viewBottomConstraint = NSLayoutConstraint(item: containerView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0)
-        innerContainerConstraint = NSLayoutConstraint(item: innerContainerView, attribute: .bottom, relatedBy: .equal, toItem: guide, attribute: .bottom, multiplier: 1, constant: -8)
+
+        viewBottomConstraint = NSLayoutConstraint(item: containerView, attribute: .bottom, relatedBy: .equal, toItem: guide, attribute: .bottom, multiplier: 1, constant: 0)
         view.addConstraint(viewBottomConstraint!)
-        view.addConstraint(innerContainerConstraint!)
-      
+
     }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        view.bringSubviewToFront(containerView)
-        containerView.bringSubviewToFront(innerContainerView)
-        innerContainerView.bringSubviewToFront(inputTextView)
-    }
-    
+
     @objc func buttonPressed() {
     }
-    
+
     func textViewDidBeginEditing(_ textView: UITextView) {
         inputTextView.becomeFirstResponder()
         if textView.textColor == .lightGray {
@@ -151,19 +134,20 @@ class ChatLogController: UICollectionViewController, UITextViewDelegate {
             textView.textColor = .black
         }
     }
-    
+
     func textViewDidChange(_ textView: UITextView) {
-        if inputTextView.contentSize.height >= 149.66666666666666 {
+        if inputTextView.contentSize.height >=  140 {
             inputTextView.isScrollEnabled = true
         } else {
             inputTextView.isScrollEnabled = false
-        }
+            textView.setNeedsUpdateConstraints()
 
+        }
     }
-    
+
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.isEmpty {
-            textView.text = "Placeholder"
+            textView.text = "Message"
             textView.textColor = .lightGray
         }
     }
