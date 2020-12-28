@@ -11,8 +11,8 @@ import CoreGraphics
 
 class ChatLogController: UICollectionViewController, UITextViewDelegate {
 
-    var viewBottomConstraint: NSLayoutConstraint?
-    var innerContainerConstraint: NSLayoutConstraint?
+    var keyboardHeight: CGFloat = 0.0
+    let inputTextViewHeightConstant: CGFloat = 130.66666666666666
 
 
     override func viewDidLoad() {
@@ -27,13 +27,6 @@ class ChatLogController: UICollectionViewController, UITextViewDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification), name: UIResponder.keyboardWillShowNotification, object: nil)
     }
 
-    @objc func handleKeyboardNotification(notification: NSNotification) {
-        if let userInfo = notification.userInfo {
-            if let keyboardFrame = (userInfo["UIKeyboardFrameEndUserInfoKey"] as? NSValue)?.cgRectValue {
-                viewBottomConstraint?.constant = -keyboardFrame.height
-            }
-        }
-    }
 
     let containerView: UIView = {
         let container = UIView()
@@ -93,7 +86,8 @@ class ChatLogController: UICollectionViewController, UITextViewDelegate {
         
         containerView.easy.layout(
             Left().to(view,.left),
-            Right().to(view,.right)
+            Right().to(view,.right),
+            Bottom().to(view,.bottom)
         )
         
         separator.easy.layout(
@@ -108,7 +102,7 @@ class ChatLogController: UICollectionViewController, UITextViewDelegate {
             Right().to(sendButton,.left),
             Top(8).to(containerView,.top),
             Bottom(8).to(guide,.bottom),
-            Height(<=144.5)
+            Height(<=inputTextViewHeightConstant)
         )
         
         sendButton.easy.layout(
@@ -119,12 +113,21 @@ class ChatLogController: UICollectionViewController, UITextViewDelegate {
             Width(80)
         )
 
-        viewBottomConstraint = NSLayoutConstraint(item: containerView, attribute: .bottom, relatedBy: .equal, toItem: guide, attribute: .bottom, multiplier: 1, constant: 0)
-        view.addConstraint(viewBottomConstraint!)
-
+    }
+    
+    @objc func handleKeyboardNotification(notification: NSNotification) {
+        if let userInfo = notification.userInfo {
+            if let keyboardFrame = (userInfo["UIKeyboardFrameEndUserInfoKey"] as? NSValue)?.cgRectValue {
+                keyboardHeight = keyboardFrame.height
+                containerView.easy.layout(Bottom(keyboardHeight).to(view,.bottom))
+                inputTextView.easy.layout(Bottom(keyboardHeight+8).to(view,.bottom))
+                sendButton.easy.layout(Bottom(keyboardHeight+8).to(view,.bottom))
+            }
+        }
     }
 
     @objc func buttonPressed() {
+        print(containerView.constraints)
     }
 
     func textViewDidBeginEditing(_ textView: UITextView) {
@@ -136,12 +139,11 @@ class ChatLogController: UICollectionViewController, UITextViewDelegate {
     }
 
     func textViewDidChange(_ textView: UITextView) {
-        if inputTextView.contentSize.height >=  140 {
+        if inputTextView.contentSize.height >= inputTextViewHeightConstant {
             inputTextView.isScrollEnabled = true
         } else {
             inputTextView.isScrollEnabled = false
             textView.setNeedsUpdateConstraints()
-
         }
     }
 
