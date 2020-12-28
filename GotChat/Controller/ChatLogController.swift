@@ -14,9 +14,11 @@ class ChatLogController: UICollectionViewController, UITextViewDelegate {
     var keyboardHeight: CGFloat = 0.0
     let inputTextViewHeightConstant: CGFloat = 130.66666666666666
 
-
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
+        view.addGestureRecognizer(tap)
 
         navigationItem.title = "Something"
         collectionView.backgroundColor = .white
@@ -25,6 +27,7 @@ class ChatLogController: UICollectionViewController, UITextViewDelegate {
         setupInputComponents()
 
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 
 
@@ -118,25 +121,28 @@ class ChatLogController: UICollectionViewController, UITextViewDelegate {
     @objc func handleKeyboardNotification(notification: NSNotification) {
         if let userInfo = notification.userInfo {
             if let keyboardFrame = (userInfo["UIKeyboardFrameEndUserInfoKey"] as? NSValue)?.cgRectValue {
+                let isKeyboardShowing = notification.name.rawValue == "UIKeyboardWillShowNotification"
                 keyboardHeight = keyboardFrame.height
-                containerView.easy.layout(Bottom(keyboardHeight).to(view,.bottom))
-                inputTextView.easy.layout(Bottom(keyboardHeight+8).to(view,.bottom))
-                sendButton.easy.layout(Bottom(keyboardHeight+8).to(view,.bottom))
+                containerView.easy.layout(Bottom(keyboardHeight).to(view,.bottom).when({isKeyboardShowing}),
+                                          Bottom().to(view,.bottom).when({!isKeyboardShowing}))
+                inputTextView.easy.layout(Bottom(keyboardHeight+8).to(view,.bottom).when({isKeyboardShowing}),
+                                          Bottom(8).to(view.safeAreaLayoutGuide,.bottom).when({!isKeyboardShowing}))
+                sendButton.easy.layout(Bottom(keyboardHeight+8).to(view,.bottom).when({isKeyboardShowing}),
+                                       Bottom(8).to(view.safeAreaLayoutGuide,.bottom).when({!isKeyboardShowing}))
             }
         }
     }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        inputTextView.endEditing(true)
+    }
+    
 
     @objc func buttonPressed() {
-        print(containerView.constraints)
+        
     }
 
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        inputTextView.becomeFirstResponder()
-        if textView.textColor == .lightGray {
-            textView.text = nil
-            textView.textColor = .black
-        }
-    }
+    
 
     func textViewDidChange(_ textView: UITextView) {
         if inputTextView.contentSize.height >= inputTextViewHeightConstant {
@@ -146,7 +152,14 @@ class ChatLogController: UICollectionViewController, UITextViewDelegate {
             textView.setNeedsUpdateConstraints()
         }
     }
-
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+            inputTextView.becomeFirstResponder()
+            if textView.textColor == .lightGray {
+                textView.text = nil
+                textView.textColor = .black
+            }
+        }
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.isEmpty {
             textView.text = "Message"
