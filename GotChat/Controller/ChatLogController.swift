@@ -123,12 +123,17 @@ class ChatLogController: UICollectionViewController, UITextViewDelegate {
             if let keyboardFrame = (userInfo["UIKeyboardFrameEndUserInfoKey"] as? NSValue)?.cgRectValue {
                 let isKeyboardShowing = notification.name.rawValue == "UIKeyboardWillShowNotification"
                 keyboardHeight = keyboardFrame.height
-                containerView.easy.layout(Bottom(keyboardHeight).to(view,.bottom).when({isKeyboardShowing}),
-                                          Bottom().to(view,.bottom).when({!isKeyboardShowing}))
-                inputTextView.easy.layout(Bottom(keyboardHeight+8).to(view,.bottom).when({isKeyboardShowing}),
-                                          Bottom(8).to(view.safeAreaLayoutGuide,.bottom).when({!isKeyboardShowing}))
-                sendButton.easy.layout(Bottom(keyboardHeight+8).to(view,.bottom).when({isKeyboardShowing}),
-                                       Bottom(8).to(view.safeAreaLayoutGuide,.bottom).when({!isKeyboardShowing}))
+                
+                if isKeyboardShowing {
+                    inputTextView.easy.reload()
+                    inputTextView.easy.layout(Bottom(keyboardHeight+8).to(view,.bottom),
+                                              Height(<=inputTextViewHeightConstant))
+                    sendButton.easy.layout(Bottom(keyboardHeight+8).to(view,.bottom))
+                } else {
+                    inputTextView.easy.layout(Bottom(8).to(view.safeAreaLayoutGuide,.bottom),
+                                              Height(inputTextView.frame.height))
+                    sendButton.easy.layout(Bottom(8).to(view.safeAreaLayoutGuide,.bottom))
+                }
             }
         }
     }
