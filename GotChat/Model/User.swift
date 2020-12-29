@@ -8,6 +8,7 @@
 import UIKit
 
 struct User {
+    public let id: String
     public let name: String
     public let email: String
     public let url: String?

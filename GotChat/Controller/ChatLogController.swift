@@ -7,20 +7,25 @@
 
 import UIKit
 import EasyPeasy
-import CoreGraphics
+import Firebase
 
 class ChatLogController: UICollectionViewController, UITextViewDelegate {
 
     var keyboardHeight: CGFloat = 0.0
     let inputTextViewHeightConstant: CGFloat = 130.66666666666666
 
+    var user: User? {
+        didSet {
+            navigationItem.title = user?.name
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
         view.addGestureRecognizer(tap)
 
-        navigationItem.title = "Something"
         collectionView.backgroundColor = .white
         inputTextView.delegate = self
 
@@ -144,7 +149,14 @@ class ChatLogController: UICollectionViewController, UITextViewDelegate {
     
 
     @objc func buttonPressed() {
-        
+        let ref = Database.database().reference().child("messages")
+        let childRef = ref.childByAutoId()
+        let fromId = Auth.auth().currentUser!.uid
+        let toId = user!.id
+        let timeStamp = NSNumber(value: NSDate().timeIntervalSince1970)
+        let values = ["text": inputTextView.text!,"fromId": fromId ,"toId": toId, "timeStamp": timeStamp] as [String : Any]
+        childRef.updateChildValues(values)
+        inputTextView.text.removeAll()
     }
 
     

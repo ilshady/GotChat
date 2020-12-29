@@ -68,7 +68,7 @@ extension LoginViewController: UIImagePickerControllerDelegate,UINavigationContr
             return
         }
         
-        //MBProgressHUD.showAdded(to: self.view, animated: true)
+        MBProgressHUD.showAdded(to: self.view, animated: true)
         
         Auth.auth().createUser(withEmail: email, password: pass) { (authResult, error) in
             if error != nil {
@@ -94,7 +94,7 @@ extension LoginViewController: UIImagePickerControllerDelegate,UINavigationContr
                         if let imageUrl = url?.absoluteString {
                             let values = ["name": name, "email": email, "url": imageUrl]
                             self.registerUserIntoDB(uid: userID, values: values)
-                           // MBProgressHUD.hide(for: self.view, animated: true)
+                            MBProgressHUD.hide(for: self.view, animated: true)
                             self.dismiss(animated: true, completion: nil)
                         }
                         

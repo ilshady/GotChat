@@ -25,6 +25,7 @@ class MessageViewController: UITableViewController {
     }
     
     @objc func handleCompose() {
+        newMessageVC.messageVC = self
         let navController = UINavigationController(rootViewController: newMessageVC)
         navController.modalPresentationStyle = .fullScreen
         present(navController, animated: true)
@@ -51,11 +52,12 @@ class MessageViewController: UITableViewController {
             } else {
                 Database.database().reference().child("users").child(uid!).observeSingleEvent(of: .value) { (snapshot) in
                     if let dictionary = snapshot.value as? NSDictionary {
+                        let id = snapshot.key
                         let name = dictionary["name"] as? String ?? ""
                         let email = dictionary["email"] as? String ?? ""
                         let url = dictionary["url"] as? String ?? ""
                         
-                        let user = User(name: name, email: email, url: url)
+                        let user = User(id: id, name: name, email: email, url: url)
                         
                         self.setupNavBar(user: user)
                         DispatchQueue.main.async {
@@ -107,13 +109,14 @@ class MessageViewController: UITableViewController {
 
         self.navigationItem.titleView = titleView
         
-        titleView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showChatLog)))
+        //titleView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showChatLog)))
 
     }
     
-    @objc func showChatLog() {
-        let chatLog = ChatLogController(collectionViewLayout: UICollectionViewFlowLayout())
-        navigationController?.pushViewController(chatLog, animated: true)
+    func showChatLogForUser(user: User) {
+        let chatLogVC = ChatLogController(collectionViewLayout: UICollectionViewFlowLayout())
+        chatLogVC.user = user
+        navigationController?.pushViewController(chatLogVC, animated: true)
     }
 }
 

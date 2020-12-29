@@ -13,6 +13,7 @@ class NewMessageTableViewController: UITableViewController {
     
     let cellId = "cellId"
     var users = [User]()
+    var messageVC: MessageViewController?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,11 +25,12 @@ class NewMessageTableViewController: UITableViewController {
     func fetchUser() {
             Database.database().reference().child("users").observe(.childAdded) { (snapshot) in
                 if let value = snapshot.value as? NSDictionary  {
+                    let id = snapshot.key
                     let name = value["name"] as? String ?? ""
                     let email = value["email"] as? String ?? ""
                     let imageURL = value["url"] as? String ?? ""
 
-                    let user = User(name: name, email: email, url: imageURL)
+                    let user = User(id: id, name: name, email: email, url: imageURL)
                     self.users.append(user)
                 }
                 self.tableView.reloadData()
@@ -55,6 +57,14 @@ class NewMessageTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return users.count
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        dismiss(animated: true) {
+            print("NewMessageVC dissmissed")
+            let user = self.users[indexPath.row]
+            self.messageVC?.showChatLogForUser(user: user)
+        }
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
