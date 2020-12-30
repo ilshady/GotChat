@@ -17,7 +17,7 @@ class MessageViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.register(TableViewCell.self, forCellReuseIdentifier: "cellId")
+        tableView.register(UserCell.self, forCellReuseIdentifier: "cellId")
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(handleLogout))
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "compose"), style: .plain, target: self, action: #selector(handleCompose))
@@ -125,11 +125,8 @@ class MessageViewController: UITableViewController {
             Left(10).to(profileImageView),
             CenterY(0)
         )
-        
 
         self.navigationItem.titleView = titleView
-        
-        //titleView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showChatLog)))
 
     }
     
@@ -147,22 +144,10 @@ extension MessageViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath) as! TableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath) as! UserCell
         let message = messages[indexPath.row]
         
-        let toID = message.toID
-            let ref = Database.database().reference().child("users").child(toID)
-            ref.observeSingleEvent(of: .value) { (snapshot) in
-                if let dictionary = snapshot.value as? NSDictionary  {
-                    let name = dictionary["name"] as? String ?? ""
-                    let url = dictionary["url"] as? String ?? ""
-                    
-                    cell.textLabel?.text = name
-                    cell.profileImageView.loadImages(urlString: url)
-                }
-            }
-
-        cell.detailTextLabel?.text = message.text
+        cell.message = message
         return cell
     }
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

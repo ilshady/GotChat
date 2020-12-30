@@ -17,7 +17,7 @@ class NewMessageTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.register(TableViewCell.self, forCellReuseIdentifier: cellId)
+        tableView.register(UserCell.self, forCellReuseIdentifier: cellId)
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(handleCancel))
         fetchUser()
     }
@@ -44,7 +44,7 @@ class NewMessageTableViewController: UITableViewController {
     
     // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! TableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! UserCell
         let user = users[indexPath.row]
         let urlString = user.url!
         cell.textLabel?.text = user.name
@@ -61,7 +61,6 @@ class NewMessageTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         dismiss(animated: true) {
-            print("NewMessageVC dissmissed")
             let user = self.users[indexPath.row]
             self.messageVC?.showChatLogForUser(user: user)
         }
@@ -71,40 +70,4 @@ class NewMessageTableViewController: UITableViewController {
         return 72
     }
 
-}
-
-class TableViewCell: UITableViewCell {
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        textLabel?.frame = CGRect(x: profileImageView.frame.maxX+8, y: textLabel!.frame.origin.y-2, width: textLabel!.frame.width, height: textLabel!.frame.height)
-        detailTextLabel?.frame = CGRect(x: profileImageView.frame.maxX+8, y: detailTextLabel!.frame.origin.y+2, width: detailTextLabel!.frame.width, height: detailTextLabel!.frame.height)
-    }
-    
-    var profileImageView: UIImageView = {
-        let image = UIImageView()
-        image.layer.cornerRadius = 26
-        image.layer.masksToBounds = true
-        image.translatesAutoresizingMaskIntoConstraints = true
-        return image
-    }()
-    
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
-        
-        addSubview(profileImageView)
-        
-        profileImageView.easy.layout(
-            Left(8),
-            CenterY(0),
-            Width(52),
-            Height(52)
-        )
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
 }
