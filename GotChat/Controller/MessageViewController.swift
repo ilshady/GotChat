@@ -50,6 +50,7 @@ class MessageViewController: UITableViewController {
     }
     
     func observeMessages() {
+        
         let ref = Database.database().reference().child("messages")
         ref.observe(.childAdded) { (snapshot) in
             if let dict = snapshot.value as? NSDictionary {
@@ -67,28 +68,26 @@ class MessageViewController: UITableViewController {
     
     func loginCheck() {
         
-            let uid = Auth.auth().currentUser?.uid
-            if uid == nil {
-                self.perform(#selector(self.handleLogout), with: nil, afterDelay: 0)
-            } else {
-                Database.database().reference().child("users").child(uid!).observeSingleEvent(of: .value) { (snapshot) in
-                    if let dictionary = snapshot.value as? NSDictionary {
-                        let id = snapshot.key
-                        let name = dictionary["name"] as? String ?? ""
-                        let email = dictionary["email"] as? String ?? ""
-                        let url = dictionary["url"] as? String ?? ""
-                        
-                        let user = User(id: id, name: name, email: email, url: url)
-                        
-                        self.setupNavBar(user: user)
-                        DispatchQueue.main.async {
-                            self.navigationItem.title = dictionary["name"] as? String
-                        }
+        let uid = Auth.auth().currentUser?.uid
+        if uid == nil {
+            self.perform(#selector(self.handleLogout), with: nil, afterDelay: 0)
+        } else {
+            Database.database().reference().child("users").child(uid!).observeSingleEvent(of: .value) { (snapshot) in
+                if let dictionary = snapshot.value as? NSDictionary {
+                    let id = snapshot.key
+                    let name = dictionary["name"] as? String ?? ""
+                    let email = dictionary["email"] as? String ?? ""
+                    let url = dictionary["url"] as? String ?? ""
+                    
+                    let user = User(id: id, name: name, email: email, url: url)
+                    
+                    self.setupNavBar(user: user)
+                    DispatchQueue.main.async {
+                        self.navigationItem.title = dictionary["name"] as? String
                     }
                 }
             }
-        
-        
+        }
     }
     
     func setupNavBar(user: User) {
@@ -150,9 +149,24 @@ extension MessageViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath) as! TableViewCell
         let message = messages[indexPath.row]
-        cell.textLabel?.text = message.fromID
+        
+        let toID = message.toID
+            let ref = Database.database().reference().child("users").child(toID)
+            ref.observeSingleEvent(of: .value) { (snapshot) in
+                if let dictionary = snapshot.value as? NSDictionary  {
+                    let name = dictionary["name"] as? String ?? ""
+                    let url = dictionary["url"] as? String ?? ""
+                    
+                    cell.textLabel?.text = name
+                    cell.profileImageView.loadImages(urlString: url)
+                }
+            }
+
         cell.detailTextLabel?.text = message.text
         return cell
+    }
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 72
     }
     
 }
