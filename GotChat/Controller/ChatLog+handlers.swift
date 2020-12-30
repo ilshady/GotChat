@@ -36,8 +36,6 @@ override func collectionView(_ collectionView: UICollectionView, didSelectItemAt
 }
     
 
-
-
 @objc func buttonPressed() {
     let ref = Database.database().reference().child("messages")
     let childRef = ref.childByAutoId()

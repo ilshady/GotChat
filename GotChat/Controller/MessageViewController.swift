@@ -13,11 +13,16 @@ class MessageViewController: UITableViewController {
     
     let loginVC = LoginViewController()
     let newMessageVC = NewMessageTableViewController()
+    var messages = [Message]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.register(TableViewCell.self, forCellReuseIdentifier: "cellId")
+        
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(handleLogout))
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "compose"), style: .plain, target: self, action: #selector(handleCompose))
+        
+        observeMessages()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -42,6 +47,22 @@ class MessageViewController: UITableViewController {
         loginVC.modalPresentationStyle = .fullScreen
         present(loginVC,animated: true)
         
+    }
+    
+    func observeMessages() {
+        let ref = Database.database().reference().child("messages")
+        ref.observe(.childAdded) { (snapshot) in
+            if let dict = snapshot.value as? NSDictionary {
+                let fromID = dict["fromId"] as? String ?? ""
+                let text = dict["text"] as? String ?? ""
+                let timeStamp = dict["timeStamp"] as? NSNumber ?? 0
+                let toID = dict["toId"] as? String ?? ""
+                
+                let message = Message(fromID: fromID, text: text, timeStamp: timeStamp, toID: toID)
+                self.messages.append(message)
+            }
+            self.tableView.reloadData()
+        }
     }
     
     func loginCheck() {
@@ -120,3 +141,18 @@ class MessageViewController: UITableViewController {
     }
 }
 
+extension MessageViewController {
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return messages.count
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath) as! TableViewCell
+        let message = messages[indexPath.row]
+        cell.textLabel?.text = message.fromID
+        cell.detailTextLabel?.text = message.text
+        return cell
+    }
+    
+}

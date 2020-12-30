@@ -13,3 +13,10 @@ struct User {
     public let email: String
     public let url: String?
 }
+
+struct Message {
+    public let fromID: String
+    public let text: String
+    public let timeStamp: NSNumber
+    public let toID: String
+}
