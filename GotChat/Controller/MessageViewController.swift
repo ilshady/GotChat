@@ -49,41 +49,51 @@ class MessageViewController: UITableViewController {
         
     }
     
+    var messageDict = [String: Message]()
+    
     func observeMessages() {
         
-        let ref = Database.database().reference().child("messages")
-        ref.observe(.childAdded) { (snapshot) in
-            if let dict = snapshot.value as? NSDictionary {
-                let fromID = dict["fromId"] as? String ?? ""
-                let text = dict["text"] as? String ?? ""
-                let timeStamp = dict["timeStamp"] as? NSNumber ?? 0
-                let toID = dict["toId"] as? String ?? ""
-                
-                let message = Message(fromID: fromID, text: text, timeStamp: timeStamp, toID: toID)
-                self.messages.append(message)
+        DispatchQueue.global().async {
+            let ref = Database.database().reference().child("messages")
+            ref.observe(.childAdded) { (snapshot) in
+                if let dict = snapshot.value as? NSDictionary {
+                    let fromID = dict["fromId"] as? String ?? ""
+                    let text = dict["text"] as? String ?? ""
+                    let timeStamp = dict["timeStamp"] as? NSNumber ?? 0
+                    let toID = dict["toId"] as? String ?? ""
+                    
+                    let message = Message(fromID: fromID, text: text, timeStamp: timeStamp, toID: toID)
+                    
+                    self.messageDict[toID] = message
+                    self.messages = Array(self.messageDict.values)
+                }
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
             }
-            self.tableView.reloadData()
         }
     }
     
     func loginCheck() {
         
-        let uid = Auth.auth().currentUser?.uid
-        if uid == nil {
-            self.perform(#selector(self.handleLogout), with: nil, afterDelay: 0)
-        } else {
-            Database.database().reference().child("users").child(uid!).observeSingleEvent(of: .value) { (snapshot) in
-                if let dictionary = snapshot.value as? NSDictionary {
-                    let id = snapshot.key
-                    let name = dictionary["name"] as? String ?? ""
-                    let email = dictionary["email"] as? String ?? ""
-                    let url = dictionary["url"] as? String ?? ""
-                    
-                    let user = User(id: id, name: name, email: email, url: url)
-                    
-                    self.setupNavBar(user: user)
-                    DispatchQueue.main.async {
-                        self.navigationItem.title = dictionary["name"] as? String
+        DispatchQueue.global().async {
+            let uid = Auth.auth().currentUser?.uid
+            if uid == nil {
+                self.perform(#selector(self.handleLogout), with: nil, afterDelay: 0)
+            } else {
+                Database.database().reference().child("users").child(uid!).observeSingleEvent(of: .value) { (snapshot) in
+                    if let dictionary = snapshot.value as? NSDictionary {
+                        let id = snapshot.key
+                        let name = dictionary["name"] as? String ?? ""
+                        let email = dictionary["email"] as? String ?? ""
+                        let url = dictionary["url"] as? String ?? ""
+                        
+                        let user = User(id: id, name: name, email: email, url: url)
+                        
+                        self.setupNavBar(user: user)
+                        DispatchQueue.main.async {
+                            self.navigationItem.title = dictionary["name"] as? String
+                        }
                     }
                 }
             }
@@ -95,7 +105,6 @@ class MessageViewController: UITableViewController {
         let titleView = UIView()
         titleView.widthAnchor.constraint(equalToConstant: 200).isActive = true
         titleView.heightAnchor.constraint(equalToConstant: 44).isActive = true
-        titleView.backgroundColor = .red
         titleView.translatesAutoresizingMaskIntoConstraints = false
         
         let profileImageView = UIImageView()

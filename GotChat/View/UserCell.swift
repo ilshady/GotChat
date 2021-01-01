@@ -26,6 +26,13 @@ class UserCell: UITableViewCell {
                 }
 
             detailTextLabel?.text = message!.text
+            
+            if let seconds = message?.timeStamp.doubleValue {
+                let timeStampDate = Date(timeIntervalSince1970: seconds)
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "HH:MM"
+                timeLabel.text = dateFormatter.string(from: timeStampDate)
+            }
         }
     }
 
@@ -44,10 +51,20 @@ class UserCell: UITableViewCell {
         return image
     }()
     
+    let timeLabel: UILabel = {
+       let label = UILabel()
+        label.text = "HH:MM"
+        label.font = .systemFont(ofSize: 13)
+        label.textColor = .lightGray
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
         
         addSubview(profileImageView)
+        addSubview(timeLabel)
         
         profileImageView.easy.layout(
             Left(8),
@@ -55,6 +72,11 @@ class UserCell: UITableViewCell {
             Width(52),
             Height(52)
         )
+        
+        //THE KOSTYL MADAFAKA
+        [timeLabel.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -14),
+         timeLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 14),
+        timeLabel.heightAnchor.constraint(equalTo: textLabel!.heightAnchor)].forEach({$0.isActive = true})
     }
     
     required init?(coder: NSCoder) {

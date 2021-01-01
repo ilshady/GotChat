@@ -10,7 +10,7 @@ import EasyPeasy
 import Firebase
 
 extension ChatLogController {
-      
+      //TO DO: Fix the height sticking issue 
 @objc func handleKeyboardNotification(notification: NSNotification) {
     if let userInfo = notification.userInfo {
         if let keyboardFrame = (userInfo["UIKeyboardFrameEndUserInfoKey"] as? NSValue)?.cgRectValue {

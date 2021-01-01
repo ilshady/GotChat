@@ -69,35 +69,35 @@ extension LoginViewController: UIImagePickerControllerDelegate,UINavigationContr
         }
         
         MBProgressHUD.showAdded(to: self.view, animated: true)
-        
-        Auth.auth().createUser(withEmail: email, password: pass) { (authResult, error) in
-            if error != nil {
-                print("Auth error", error!)
-                return
-            
-        }
-            guard let userID = Auth.auth().currentUser?.uid else {
-                return
+        DispatchQueue.global(qos: .userInteractive).async {
+            Auth.auth().createUser(withEmail: email, password: pass) { (authResult, error) in
+                if error != nil {
+                    print("Auth error", error!)
+                    return
+                
             }
-            
-            let storageRef = Storage.storage().reference().child("profileImages").child("\(userID).png")
-            
-            if let uploadData = self.profileImage.image?.jpegData(compressionQuality: 0.1) {
-                storageRef.putData(uploadData, metadata: nil) { (metadata, error) in
-                    if error != nil {
-                        print(error!)
-                    }
-                    storageRef.downloadURL { (url, error) in
+                guard let userID = Auth.auth().currentUser?.uid else {
+                    return
+                }
+                
+                let storageRef = Storage.storage().reference().child("profileImages").child("\(userID).png")
+                
+                if let uploadData = self.profileImage.image?.jpegData(compressionQuality: 0.1) {
+                    storageRef.putData(uploadData, metadata: nil) { (metadata, error) in
                         if error != nil {
                             print(error!)
                         }
-                        if let imageUrl = url?.absoluteString {
-                            let values = ["name": name, "email": email, "url": imageUrl]
-                            self.registerUserIntoDB(uid: userID, values: values)
-                            MBProgressHUD.hide(for: self.view, animated: true)
-                            self.dismiss(animated: true, completion: nil)
+                        storageRef.downloadURL { (url, error) in
+                            if error != nil {
+                                print(error!)
+                            }
+                            if let imageUrl = url?.absoluteString {
+                                let values = ["name": name, "email": email, "url": imageUrl]
+                                self.registerUserIntoDB(uid: userID, values: values)
+                                MBProgressHUD.hide(for: self.view, animated: true)
+                                self.dismiss(animated: true, completion: nil)
+                            }
                         }
-                        
                     }
                 }
             }
