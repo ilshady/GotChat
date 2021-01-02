@@ -29,10 +29,23 @@ class UserCell: UITableViewCell {
             
             if let seconds = message?.timeStamp.doubleValue {
                 let timeStampDate = Date(timeIntervalSince1970: seconds)
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "HH:MM"
-                timeLabel.text = dateFormatter.string(from: timeStampDate)
+                dateRepresentation(date: timeStampDate)
             }
+        }
+    }
+    
+    func dateRepresentation(date: Date) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm"
+        var calendar = Calendar.current
+        calendar.timeZone = TimeZone.current
+        if calendar.isDateInToday(date) {
+            timeLabel.text = dateFormatter.string(from: date)
+        } else if calendar.isDateInYesterday(date) {
+            timeLabel.text = "Yesterday"
+        } else {
+            let weekDay = dateFormatter.weekdaySymbols[calendar.component(.weekday, from: date)-1]
+            timeLabel.text = weekDay
         }
     }
 

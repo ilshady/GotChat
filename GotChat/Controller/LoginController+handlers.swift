@@ -48,7 +48,6 @@ extension LoginViewController: UIImagePickerControllerDelegate,UINavigationContr
         
         MBProgressHUD.showAdded(to: self.view, animated: true)
         
-        DispatchQueue.global(qos: .userInteractive).async {
             Auth.auth().signIn(withEmail: email, password: pass) { (authResult, error) in
                 if error != nil {
                     print("Sign error", error!)
@@ -58,7 +57,6 @@ extension LoginViewController: UIImagePickerControllerDelegate,UINavigationContr
                 self.dismiss(animated: true, completion: nil)
                 print("successfully signed in!", email)
             }
-        }
     }
     
     @objc func handleRegister() {

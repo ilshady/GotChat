@@ -14,6 +14,7 @@ class MessageViewController: UITableViewController {
     let loginVC = LoginViewController()
     let newMessageVC = NewMessageTableViewController()
     var messages = [Message]()
+    var messageDict = [String: Message]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,8 +50,6 @@ class MessageViewController: UITableViewController {
         
     }
     
-    var messageDict = [String: Message]()
-    
     func observeMessages() {
         
         DispatchQueue.global().async {
@@ -66,6 +65,8 @@ class MessageViewController: UITableViewController {
                     
                     self.messageDict[toID] = message
                     self.messages = Array(self.messageDict.values)
+                    self.messages.sort { $0.timeStamp.intValue > $1.timeStamp.intValue
+                    }
                 }
                 DispatchQueue.main.async {
                     self.tableView.reloadData()

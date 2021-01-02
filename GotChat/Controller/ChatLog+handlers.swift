@@ -41,7 +41,7 @@ override func collectionView(_ collectionView: UICollectionView, didSelectItemAt
     let childRef = ref.childByAutoId()
     let fromId = Auth.auth().currentUser!.uid
     let toId = user!.id
-    let timeStamp = NSNumber(value: NSDate().timeIntervalSince1970)
+    let timeStamp = NSNumber(value: Date().timeIntervalSince1970)
     let values = ["text": inputTextView.text!,"fromId": fromId ,"toId": toId, "timeStamp": timeStamp] as [String : Any]
     childRef.updateChildValues(values)
     inputTextView.text.removeAll()
