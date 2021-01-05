@@ -13,8 +13,14 @@ class UserCell: UITableViewCell {
     
     var message: Message? {
         didSet {
-            let toID = message!.toID
-                let ref = Database.database().reference().child("users").child(toID)
+            let uid: String?
+            if message?.fromID == Auth.auth().currentUser?.uid {
+                uid = message?.toID
+            } else {
+                uid = message?.fromID
+            }
+            if let id = uid {
+                let ref = Database.database().reference().child("users").child(id)
                 ref.observeSingleEvent(of: .value) { (snapshot) in
                     if let dictionary = snapshot.value as? NSDictionary  {
                         let name = dictionary["name"] as? String ?? ""
@@ -24,7 +30,7 @@ class UserCell: UITableViewCell {
                         self.profileImageView.loadImages(urlString: url)
                     }
                 }
-
+            }
             detailTextLabel?.text = message!.text
             
             if let seconds = message?.timeStamp.doubleValue {

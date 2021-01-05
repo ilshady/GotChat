@@ -23,11 +23,42 @@ class MessageViewController: UITableViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(handleLogout))
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "compose"), style: .plain, target: self, action: #selector(handleCompose))
         
-        observeMessages()
+        //observeMessages()
+       // observeUserMessages()
+    }
+        
+    func observeUserMessages() {
+        guard let uid = Auth.auth().currentUser?.uid else {
+            return
+        }
+            let ref = Database.database().reference().child("user-messages").child(uid)
+            ref.observe(.childAdded) { (snapshot) in
+                let messageID = snapshot.key
+                let messagesRef = Database.database().reference().child("messages").child(messageID)
+                messagesRef.observeSingleEvent(of: .value) { (snapshot) in
+                    if let dict = snapshot.value as? NSDictionary {
+                        let fromID = dict["fromId"] as? String ?? ""
+                        let text = dict["text"] as? String ?? ""
+                        let timeStamp = dict["timeStamp"] as? NSNumber ?? 0
+                        let toID = dict["toId"] as? String ?? ""
+                        
+                        let message = Message(fromID: fromID, text: text, timeStamp: timeStamp, toID: toID)
+                        
+                        self.messageDict[toID] = message
+                        self.messages = Array(self.messageDict.values)
+                        self.messages.sort { $0.timeStamp.intValue > $1.timeStamp.intValue
+                        }
+                    }
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+                }
+            }
     }
     
     override func viewDidAppear(_ animated: Bool) {
         loginCheck()
+        observeUserMessages()
     }
     
     @objc func handleCompose() {
@@ -76,8 +107,6 @@ class MessageViewController: UITableViewController {
     }
     
     func loginCheck() {
-        
-        DispatchQueue.global().async {
             let uid = Auth.auth().currentUser?.uid
             if uid == nil {
                 self.perform(#selector(self.handleLogout), with: nil, afterDelay: 0)
@@ -98,10 +127,13 @@ class MessageViewController: UITableViewController {
                     }
                 }
             }
-        }
     }
     
     func setupNavBar(user: User) {
+        
+        messages.removeAll()
+        messageDict.removeAll()
+        tableView.reloadData()
         
         let titleView = UIView()
         titleView.widthAnchor.constraint(equalToConstant: 200).isActive = true
@@ -163,5 +195,7 @@ extension MessageViewController {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 72
     }
+    
+    
     
 }

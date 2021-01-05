@@ -43,7 +43,23 @@ override func collectionView(_ collectionView: UICollectionView, didSelectItemAt
     let toId = user!.id
     let timeStamp = NSNumber(value: Date().timeIntervalSince1970)
     let values = ["text": inputTextView.text!,"fromId": fromId ,"toId": toId, "timeStamp": timeStamp] as [String : Any]
-    childRef.updateChildValues(values)
+//    childRef.updateChildValues(values)
+    
+    childRef.updateChildValues(values) { (err, ref) in
+        if err != nil {
+            print(err!)
+            return
+        }
+        let userMessagesRef = Database.database().reference().child("user-messages").child(fromId)
+        guard let messageID = childRef.key else {
+                        return
+                    }
+        userMessagesRef.updateChildValues([messageID: true])
+        
+        let reciepientUserMessageRef = Database.database().reference().child("user-messages").child(toId)
+        reciepientUserMessageRef.updateChildValues([messageID: true])
+    }
+    
     inputTextView.text.removeAll()
 }
 
