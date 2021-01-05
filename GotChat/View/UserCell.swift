@@ -13,13 +13,8 @@ class UserCell: UITableViewCell {
     
     var message: Message? {
         didSet {
-            let uid: String?
-            if message?.fromID == Auth.auth().currentUser?.uid {
-                uid = message?.toID
-            } else {
-                uid = message?.fromID
-            }
-            if let id = uid {
+            
+            if let id = message?.chatPartnerId() {
                 let ref = Database.database().reference().child("users").child(id)
                 ref.observeSingleEvent(of: .value) { (snapshot) in
                     if let dictionary = snapshot.value as? NSDictionary  {

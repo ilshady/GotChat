@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Firebase
 
 struct User {
     public let id: String
@@ -19,4 +20,8 @@ struct Message {
     public let text: String
     public let timeStamp: NSNumber
     public let toID: String
+    
+    public func chatPartnerId() -> String? {
+        return fromID == Auth.auth().currentUser?.uid ? toID : fromID
+    }
 }

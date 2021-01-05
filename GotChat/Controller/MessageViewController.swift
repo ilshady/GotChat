@@ -196,6 +196,23 @@ extension MessageViewController {
         return 72
     }
     
-    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let message = messages[indexPath.row]
+        guard let chatPartnerId = message.chatPartnerId() else {
+            return
+        }
+        let ref = Database.database().reference().child("users").child(chatPartnerId)
+        ref.observeSingleEvent(of: .value) { (snapshot) in
+            if let dictionary = snapshot.value as? NSDictionary {
+                //let id = snapshot.key
+                let name = dictionary["name"] as? String ?? ""
+                let email = dictionary["email"] as? String ?? ""
+                let url = dictionary["url"] as? String ?? ""
+                
+                let user = User(id: chatPartnerId, name: name, email: email, url: url)
+                self.showChatLogForUser(user: user)
+            }
+        }
+    }
     
 }
