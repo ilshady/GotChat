@@ -50,12 +50,12 @@ extension LoginViewController: UIImagePickerControllerDelegate,UINavigationContr
         
             Auth.auth().signIn(withEmail: email, password: pass) { (authResult, error) in
                 if error != nil {
-                    print("Sign error", error!)
-                }
+                    self.showAlert(title: "Check your inputs", message: "\(error!)")
+                } else {
                 
                 MBProgressHUD.hide(for: self.view, animated:  true)
                 self.dismiss(animated: true, completion: nil)
-                print("successfully signed in!", email)
+                }
             }
     }
     
@@ -70,7 +70,7 @@ extension LoginViewController: UIImagePickerControllerDelegate,UINavigationContr
         DispatchQueue.global(qos: .userInteractive).async {
             Auth.auth().createUser(withEmail: email, password: pass) { (authResult, error) in
                 if error != nil {
-                    print("Auth error", error!)
+                    self.showAlert(title: "Check your inputs", message: "\(error!)")
                     return
                 
             }

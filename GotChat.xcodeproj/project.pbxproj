@@ -18,6 +18,7 @@
 		B8B08F45255C000D00176EF4 /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B08F44255C000D00176EF4 /* MessageViewController.swift */; };
 		B8B08F4A255C001000176EF4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B8B08F49255C001000176EF4 /* Assets.xcassets */; };
 		B8B08F56255C44C100176EF4 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B08F55255C44C100176EF4 /* LoginViewController.swift */; };
+		B8B1607725A57CD2000C95D9 /* ChatMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B1607625A57CD2000C95D9 /* ChatMessageCell.swift */; };
 		B8CD5EE9259CD9860072A541 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8CD5EE8259CD9860072A541 /* UserCell.swift */; };
 		B8FD8261256BD9CE0015BAAA /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8FD8260256BD9CE0015BAAA /* Extension.swift */; };
 		CD1BF23A15E05DAE65BD4E69 /* Pods_GotChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DEEE22C04C22A3C0FC5F104 /* Pods_GotChat.framework */; };
@@ -39,6 +40,7 @@
 		B8B08F49255C001000176EF4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B8B08F4E255C001000176EF4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B8B08F55255C44C100176EF4 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		B8B1607625A57CD2000C95D9 /* ChatMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageCell.swift; sourceTree = "<group>"; };
 		B8CD5EE8259CD9860072A541 /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		B8FD8260256BD9CE0015BAAA /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		D9CAF9DE67C2EAD11A975807 /* Pods-GotChat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GotChat.release.xcconfig"; path = "Target Support Files/Pods-GotChat/Pods-GotChat.release.xcconfig"; sourceTree = "<group>"; };
@@ -132,6 +134,7 @@
 			isa = PBXGroup;
 			children = (
 				B8CD5EE8259CD9860072A541 /* UserCell.swift */,
+				B8B1607625A57CD2000C95D9 /* ChatMessageCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -260,6 +263,7 @@
 			files = (
 				B8289708257FCAB200F8BB28 /* ChatLogController.swift in Sources */,
 				B8B08F45255C000D00176EF4 /* MessageViewController.swift in Sources */,
+				B8B1607725A57CD2000C95D9 /* ChatMessageCell.swift in Sources */,
 				B8B08F41255C000D00176EF4 /* AppDelegate.swift in Sources */,
 				B8505246256C0FB800F6D0E6 /* LoginController+handlers.swift in Sources */,
 				B8FD8261256BD9CE0015BAAA /* Extension.swift in Sources */,

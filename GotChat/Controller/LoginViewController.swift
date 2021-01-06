@@ -12,9 +12,10 @@ import MBProgressHUD
 
 class LoginViewController: UIViewController {
     
-    func showAlert(message: String) {
-        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+    func showAlert(title: String? , message: String) {
+        MBProgressHUD.hide(for: self.view, animated:  true)
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
    

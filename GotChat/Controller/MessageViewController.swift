@@ -26,7 +26,7 @@ class MessageViewController: UITableViewController {
         //observeMessages()
        // observeUserMessages()
     }
-        
+        //TO DO: fix the message duplicate problem
     func observeUserMessages() {
         guard let uid = Auth.auth().currentUser?.uid else {
             return
@@ -204,12 +204,12 @@ extension MessageViewController {
         let ref = Database.database().reference().child("users").child(chatPartnerId)
         ref.observeSingleEvent(of: .value) { (snapshot) in
             if let dictionary = snapshot.value as? NSDictionary {
-                //let id = snapshot.key
+                let id = snapshot.key
                 let name = dictionary["name"] as? String ?? ""
                 let email = dictionary["email"] as? String ?? ""
                 let url = dictionary["url"] as? String ?? ""
                 
-                let user = User(id: chatPartnerId, name: name, email: email, url: url)
+                let user = User(id: id, name: name, email: email, url: url)
                 self.showChatLogForUser(user: user)
             }
         }
