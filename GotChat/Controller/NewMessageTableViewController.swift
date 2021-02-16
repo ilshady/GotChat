@@ -61,6 +61,7 @@ class NewMessageTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         dismiss(animated: true) {
+            tableView.isUserInteractionEnabled = false
             let user = self.users[indexPath.row]
             self.messageVC?.showChatLogForUser(user: user)
         }

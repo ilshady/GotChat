@@ -11,6 +11,7 @@
 		B8289708257FCAB200F8BB28 /* ChatLogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8289707257FCAB200F8BB28 /* ChatLogController.swift */; };
 		B8408958259BAB32000A5555 /* ChatLog+handlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8408957259BAB32000A5555 /* ChatLog+handlers.swift */; };
 		B8505246256C0FB800F6D0E6 /* LoginController+handlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8505245256C0FB800F6D0E6 /* LoginController+handlers.swift */; };
+		B85AD6B525DBBA0600A824D7 /* Launch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B85AD6B425DBBA0600A824D7 /* Launch.storyboard */; };
 		B863DB8E25601615007216F0 /* NewMessageTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B863DB8D25601615007216F0 /* NewMessageTableViewController.swift */; };
 		B8AC7006255D8A9100B02969 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B8AC7005255D8A9100B02969 /* GoogleService-Info.plist */; };
 		B8B08F41255C000D00176EF4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B08F40255C000D00176EF4 /* AppDelegate.swift */; };
@@ -31,6 +32,7 @@
 		B8289707257FCAB200F8BB28 /* ChatLogController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatLogController.swift; sourceTree = "<group>"; };
 		B8408957259BAB32000A5555 /* ChatLog+handlers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatLog+handlers.swift"; sourceTree = "<group>"; };
 		B8505245256C0FB800F6D0E6 /* LoginController+handlers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoginController+handlers.swift"; sourceTree = "<group>"; };
+		B85AD6B425DBBA0600A824D7 /* Launch.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Launch.storyboard; sourceTree = "<group>"; };
 		B863DB8D25601615007216F0 /* NewMessageTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageTableViewController.swift; sourceTree = "<group>"; };
 		B8AC7005255D8A9100B02969 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../Project7/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B8B08F3D255C000D00176EF4 /* GotChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GotChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -126,6 +128,7 @@
 				B8B08F42255C000D00176EF4 /* SceneDelegate.swift */,
 				B8B08F49255C001000176EF4 /* Assets.xcassets */,
 				B8B08F4E255C001000176EF4 /* Info.plist */,
+				B85AD6B425DBBA0600A824D7 /* Launch.storyboard */,
 			);
 			path = GotChat;
 			sourceTree = "<group>";
@@ -209,6 +212,7 @@
 			files = (
 				B8B08F4A255C001000176EF4 /* Assets.xcassets in Resources */,
 				B8AC7006255D8A9100B02969 /* GoogleService-Info.plist in Resources */,
+				B85AD6B525DBBA0600A824D7 /* Launch.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

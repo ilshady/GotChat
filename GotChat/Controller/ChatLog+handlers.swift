@@ -18,14 +18,9 @@ extension ChatLogController {
             keyboardHeight = keyboardFrame.height
             
             if isKeyboardShowing {
-                inputTextView.easy.reload()
-                inputTextView.easy.layout(Bottom(keyboardHeight+8).to(view,.bottom),
-                                          Height(<=inputTextViewHeightConstant))
-                sendButton.easy.layout(Bottom(keyboardHeight+8).to(view,.bottom))
+                inputTextView.easy.layout(Bottom(keyboardHeight+8).to(view,.bottom))
             } else {
-                inputTextView.easy.layout(Bottom(8).to(view.safeAreaLayoutGuide,.bottom),
-                                          Height(inputTextView.frame.height))
-                sendButton.easy.layout(Bottom(8).to(view.safeAreaLayoutGuide,.bottom))
+                inputTextView.easy.layout(Bottom(8).to(view.safeAreaLayoutGuide,.bottom))
             }
         }
     }
@@ -70,6 +65,8 @@ func textViewDidChange(_ textView: UITextView) {
         inputTextView.isScrollEnabled = true
     } else {
         inputTextView.isScrollEnabled = false
+        inputTextView.layoutIfNeeded()
+        inputTextView.setNeedsLayout()
         textView.setNeedsUpdateConstraints()
     }
 }

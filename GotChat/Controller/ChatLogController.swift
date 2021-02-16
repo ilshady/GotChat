@@ -153,7 +153,7 @@ class ChatLogController: UICollectionViewController, UITextViewDelegate {
         sendButton.easy.layout(
             Left().to(inputTextView,.right),
             Right().to(containerView,.right),
-            Bottom(8).to(guide,.bottom),
+            Bottom().to(inputTextView,.bottom),
             Height(40),
             Width(80)
         )

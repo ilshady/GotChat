@@ -23,8 +23,6 @@ class MessageViewController: UITableViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(handleLogout))
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "compose"), style: .plain, target: self, action: #selector(handleCompose))
         
-        //observeMessages()
-       // observeUserMessages()
     }
         //TO DO: fix the message duplicate problem
     func observeUserMessages() {
