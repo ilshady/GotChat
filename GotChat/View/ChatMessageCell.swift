@@ -24,15 +24,13 @@ class ChatMessageCell: UICollectionViewCell {
         let view = UIView()
         view.backgroundColor = UIColor(r: 0, g: 137, b: 249)
         view.translatesAutoresizingMaskIntoConstraints = false
-       // view.layer.cornerRadius = 18
-       // view.layer.masksToBounds = true
+        view.layer.cornerRadius = 16
+        view.layer.masksToBounds = true
         view.layer.borderWidth = 0.2
         view.layer.borderColor = UIColor.gray.cgColor
         return view
     }()
-    
-    var bubleHeightAnchor: NSLayoutConstraint?
-    
+        
     override init(frame: CGRect) {
         super.init(frame: frame)
         
