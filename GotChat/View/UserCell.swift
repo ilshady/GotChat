@@ -42,7 +42,7 @@ class UserCell: UITableViewCell {
         calendar.timeZone = TimeZone.current
         if calendar.isDateInToday(date) {
             timeLabel.text = dateFormatter.string(from: date)
-        } else if calendar.isDateInYesterday(date) {
+        } else if calendar.isDateInYesterday(date) { 
             timeLabel.text = "Yesterday"
         } else {
             let weekDay = dateFormatter.weekdaySymbols[calendar.component(.weekday, from: date)-1]

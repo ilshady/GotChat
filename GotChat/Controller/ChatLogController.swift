@@ -62,7 +62,7 @@ class ChatLogController: UICollectionViewController, UITextViewDelegate {
         
         let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
         view.addGestureRecognizer(tap)
-
+        view.backgroundColor = .white
         collectionView.backgroundColor = .white
         inputTextView.delegate = self
 
@@ -150,6 +150,12 @@ class ChatLogController: UICollectionViewController, UITextViewDelegate {
             Height(<=inputTextViewHeightConstant)
         )
         
+        collectionView.easy.layout(
+            Top(),
+            Bottom(8).to(containerView,.top),
+            Width(view.frame.width)
+        )
+        
         sendButton.easy.layout(
             Left().to(inputTextView,.right),
             Right().to(containerView,.right),
@@ -170,12 +176,21 @@ extension ChatLogController: UICollectionViewDelegateFlowLayout {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ChatMessageCell
         
-        let message = messages[indexPath.row]
+        let message = messages[indexPath.item]
         cell.textView.text = message.text
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: 80)
+        var height: CGFloat = 80
+        let text = messages[indexPath.item].text
+        height = estimateFrameForText(text).height + 20
+        return CGSize(width: view.frame.width, height: height)
+    }
+    
+    private func estimateFrameForText(_ text: String) -> CGRect {
+        let size = CGSize(width: 200, height: 1000)
+        let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
+        return NSString(string: text).boundingRect(with: size, options: options, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16)], context: nil)
     }
 }

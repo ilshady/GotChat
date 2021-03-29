@@ -13,7 +13,7 @@ class NewMessageTableViewController: UITableViewController {
     
     let cellId = "cellId"
     var users = [User]()
-    var messageVC: MessageViewController?
+    weak var messageVC: MessageViewController?
 
     override func viewDidLoad() {
         super.viewDidLoad()

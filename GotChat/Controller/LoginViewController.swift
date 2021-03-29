@@ -12,13 +12,6 @@ import MBProgressHUD
 
 class LoginViewController: UIViewController {
     
-    func showAlert(title: String? , message: String) {
-        MBProgressHUD.hide(for: self.view, animated:  true)
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
-    }
-   
     let inputContainerView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
@@ -76,7 +69,7 @@ class LoginViewController: UIViewController {
         let text = UITextField()
         text.placeholder = "Email"
         text.autocapitalizationType = .none
-        text.translatesAutoresizingMaskIntoConstraints = false
+        
         return text
     }()
     
@@ -193,7 +186,12 @@ class LoginViewController: UIViewController {
         }
     }
     
-
+    func showAlert(title: String? , message: String) {
+        MBProgressHUD.hide(for: self.view, animated:  true)
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
     
 }
 
