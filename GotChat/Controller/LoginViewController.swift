@@ -10,46 +10,34 @@ import EasyPeasy
 import Firebase
 import MBProgressHUD
 
-protocol SomeProtocol {
-    func registerGesture()
+protocol LoginViewDeligate {
+    func profileImageTapped()
+    func registerButtonPressed()
+    func toggleChanged()
 }
 
-class LoginViewController: UIViewController, SomeProtocol {
-    
-    @objc func registerGesture() {
-        handleProfileImageSelect()
-    }
+class LoginViewController: UIViewController, LoginViewDeligate {
     
     lazy var loginView = LoginView()
         
     // MARK: - Methods
+    override func loadView() {
+        self.view = loginView
+    }
+    
+    func view() -> LoginView {
+        return self.view as! LoginView
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         loginView.viewDeligate = self
         
-        view.backgroundColor = UIColor(r: 61, g: 91, b: 151)
-        
-        //loginView.registerButton.addTarget(self, action: #selector(handleLoginRegister), for: .touchUpInside)
-        //loginView.toggle.addTarget(self, action: #selector(handleRegisterChange), for: .valueChanged)
-       // loginView.profileImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleProfileImageSelect)))
+        view.backgroundColor = #colorLiteral(red: 0.2392156863, green: 0.3568627451, blue: 1, alpha: 1)
     }
     
-    override func loadView() {
-        self.view = LoginView()
-    }
-    
-    func view() -> LoginView {
-        return self.view as! LoginView
-    }
-
-    @objc func handleRegisterChange() {
-        let toggleTitle = loginView.toggle.titleForSegment(at: loginView.toggle.selectedSegmentIndex)
-        loginView.registerButton.setTitle(toggleTitle, for: .normal)
-    }
-    
-    @objc func handleLoginRegister() {
+    func registerButtonPressed() {
         if loginView.toggle.selectedSegmentIndex == 0 {
             handleLogin()
         } else {
@@ -57,8 +45,17 @@ class LoginViewController: UIViewController, SomeProtocol {
         }
     }
     
-}
+    func toggleChanged() {
+        let toggleTitle = loginView.toggle.titleForSegment(at: loginView.toggle.selectedSegmentIndex)
+        loginView.registerButton.setTitle(toggleTitle, for: .normal)
+    }
+    
+    func profileImageTapped() {
+        handleProfileImageSelect()
+    }
 
+}
+//MARK: Extensions
 extension UIViewController {
     
     func showAlert(title: String? , message: String) {

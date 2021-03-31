@@ -10,7 +10,7 @@ import EasyPeasy
 
 class LoginView: UIView {
     
-    var viewDeligate: SomeProtocol?
+    var viewDeligate: LoginViewDeligate?
     
     let inputContainerView: UIView = {
         let view = UIView()
@@ -25,6 +25,7 @@ class LoginView: UIView {
         button.backgroundColor = UIColor(named: "mainBlue")
         button.layer.cornerRadius = 5
         button.setTitle("Register", for: .normal)
+        button.addTarget(self, action: #selector(handleRegisterButton), for: .touchUpInside)
         return button
     }()
     
@@ -33,6 +34,7 @@ class LoginView: UIView {
         toggle.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .normal)
         toggle.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor(r: 80, g: 101, b: 161)], for: .selected)
         toggle.selectedSegmentIndex = 1
+        toggle.addTarget(self, action: #selector(handleToggle), for: .valueChanged)
         return toggle
     }()
     
@@ -41,7 +43,7 @@ class LoginView: UIView {
         image.image = UIImage(named: "logo")
         image.contentMode = .scaleAspectFit
         image.isUserInteractionEnabled = true
-        image.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleImage)))
+        image.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleProfileImage)))
         return image
     }()
     
@@ -161,7 +163,15 @@ class LoginView: UIView {
 }
 
 extension LoginView {
-    @objc func handleImage() {
-        viewDeligate?.registerGesture()
+    @objc func handleProfileImage() {
+        viewDeligate?.profileImageTapped()
+    }
+    
+    @objc func handleRegisterButton() {
+        viewDeligate?.registerButtonPressed()
+    }
+    
+    @objc func handleToggle() {
+        viewDeligate?.toggleChanged()
     }
 }
