@@ -10,24 +10,21 @@ import EasyPeasy
 import Firebase
 import MBProgressHUD
 
-class LoginViewController: UIViewController {
+class LoginView: UIView {
     
     let inputContainerView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
         view.layer.cornerRadius = 5
         view.layer.masksToBounds = true
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
     let registerButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = UIColor(r: 80, g: 101, b: 161)
+        button.backgroundColor = UIColor(named: "mainBlue")
         button.layer.cornerRadius = 5
         button.setTitle("Register", for: .normal)
-        button.addTarget(self, action: #selector(handleLoginRegister), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
@@ -36,8 +33,6 @@ class LoginViewController: UIViewController {
         toggle.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .normal)
         toggle.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor(r: 80, g: 101, b: 161)], for: .selected)
         toggle.selectedSegmentIndex = 1
-        toggle.addTarget(self, action: #selector(handleRegisterChange), for: .valueChanged)
-        toggle.translatesAutoresizingMaskIntoConstraints = false
         return toggle
     }()
     
@@ -45,8 +40,6 @@ class LoginViewController: UIViewController {
         let image = UIImageView()
         image.image = UIImage(named: "logo")
         image.contentMode = .scaleAspectFit
-        image.translatesAutoresizingMaskIntoConstraints = false
-        image.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleProfileImageSelect)))
         image.isUserInteractionEnabled = true
         return image
     }()
@@ -54,14 +47,12 @@ class LoginViewController: UIViewController {
     let nameTextField: UITextField = {
         let text = UITextField()
         text.placeholder = "Name"
-        text.translatesAutoresizingMaskIntoConstraints = false
         return text
     }()
     
     let nameSeparatorView: UIView = {
         let separator = UIView()
         separator.backgroundColor = UIColor(r: 220, g: 220, b: 220)
-        separator.translatesAutoresizingMaskIntoConstraints = false
         return separator
     }()
     
@@ -69,14 +60,12 @@ class LoginViewController: UIViewController {
         let text = UITextField()
         text.placeholder = "Email"
         text.autocapitalizationType = .none
-        
         return text
     }()
     
     let emailSeparatorView: UIView = {
         let separator = UIView()
         separator.backgroundColor = UIColor(r: 220, g: 220, b: 220)
-        separator.translatesAutoresizingMaskIntoConstraints = false
         return separator
     }()
     
@@ -85,25 +74,24 @@ class LoginViewController: UIViewController {
         text.placeholder = "Password"
         text.textContentType = .newPassword
         text.isSecureTextEntry = true
-        text.translatesAutoresizingMaskIntoConstraints = false
         return text
     }()
     
-    // MARK: - Methods
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = UIColor(r: 61, g: 91, b: 151)
-        setupSubviews()
-        setupInputContainerView()
-    }
-    
-    func setupSubviews() {
-        setupInputContainerView()
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         
-        view.addSubview(toggle)
-        view.addSubview(inputContainerView)
-        view.addSubview(registerButton)
-        view.addSubview(profileImage)
+        [
+            toggle,
+            inputContainerView,
+            registerButton,
+            profileImage,
+            nameTextField,
+            nameSeparatorView,
+            emailTextField,
+            emailSeparatorView,
+            passwordTextField
+        ].forEach({addSubview($0)})
+        
         
         profileImage.easy.layout(
             CenterX(0),
@@ -121,7 +109,7 @@ class LoginViewController: UIViewController {
             CenterX(0.0),
             CenterY(0.0).when({self.toggle.selectedSegmentIndex == 1}),
             CenterY(-25).when({self.toggle.selectedSegmentIndex == 0}),
-            Width(-24).like(view),
+            Width(-24).like(self),
             Height(150).when({self.toggle.selectedSegmentIndex == 1}),
             Height(100).when({self.toggle.selectedSegmentIndex == 0})
         )
@@ -131,13 +119,7 @@ class LoginViewController: UIViewController {
             Width(0).like(inputContainerView),
             Height(40)
             )
-    }
-    
-    func setupInputContainerView() {
-        [nameTextField, nameSeparatorView, emailTextField,emailSeparatorView, passwordTextField].forEach {
-            inputContainerView.addSubview($0)
-        }
-                
+        
         nameTextField.easy.layout(
             Top(0).to(inputContainerView),
             Left(12).to(inputContainerView),
@@ -169,22 +151,52 @@ class LoginViewController: UIViewController {
             Height(*(1/3)).like(inputContainerView).when({ self.toggle.selectedSegmentIndex == 1}),
             Height(*(1/2)).like(inputContainerView).when({ self.toggle.selectedSegmentIndex == 0})
         )
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+}
+
+class LoginViewController: UIViewController {
+    
+    lazy var loginView = LoginView()
         
+    // MARK: - Methods
+    override func loadView() {
+        self.view = LoginView()
+    }
+    
+    func view() -> LoginView {
+        return self.view as! LoginView
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = UIColor(r: 61, g: 91, b: 151)
+        
+        loginView.registerButton.addTarget(self, action: #selector(handleLoginRegister), for: .touchUpInside)
+        loginView.toggle.addTarget(self, action: #selector(handleRegisterChange), for: .valueChanged)
+        loginView.profileImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleProfileImageSelect)))
     }
 
     @objc func handleRegisterChange() {
-        let toggleTitle = toggle.titleForSegment(at: toggle.selectedSegmentIndex)
-        registerButton.setTitle(toggleTitle, for: .normal)
-        setupSubviews()
+        let toggleTitle = loginView.toggle.titleForSegment(at: loginView.toggle.selectedSegmentIndex)
+        loginView.registerButton.setTitle(toggleTitle, for: .normal)
     }
     
     @objc func handleLoginRegister() {
-        if toggle.selectedSegmentIndex == 0 {
+        if loginView.toggle.selectedSegmentIndex == 0 {
             handleLogin()
         } else {
             handleRegister()
         }
     }
+    
+}
+
+extension UIViewController {
     
     func showAlert(title: String? , message: String) {
         MBProgressHUD.hide(for: self.view, animated:  true)

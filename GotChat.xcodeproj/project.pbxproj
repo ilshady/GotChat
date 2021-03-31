@@ -21,6 +21,7 @@
 		B8B08F56255C44C100176EF4 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B08F55255C44C100176EF4 /* LoginViewController.swift */; };
 		B8B1607725A57CD2000C95D9 /* ChatMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B1607625A57CD2000C95D9 /* ChatMessageCell.swift */; };
 		B8CD5EE9259CD9860072A541 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8CD5EE8259CD9860072A541 /* UserCell.swift */; };
+		B8F1A8D22613334B009D2DBE /* ChatInputContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F1A8D12613334B009D2DBE /* ChatInputContainerView.swift */; };
 		B8FD8261256BD9CE0015BAAA /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8FD8260256BD9CE0015BAAA /* Extension.swift */; };
 		CD1BF23A15E05DAE65BD4E69 /* Pods_GotChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DEEE22C04C22A3C0FC5F104 /* Pods_GotChat.framework */; };
 /* End PBXBuildFile section */
@@ -44,6 +45,7 @@
 		B8B08F55255C44C100176EF4 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		B8B1607625A57CD2000C95D9 /* ChatMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageCell.swift; sourceTree = "<group>"; };
 		B8CD5EE8259CD9860072A541 /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
+		B8F1A8D12613334B009D2DBE /* ChatInputContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatInputContainerView.swift; sourceTree = "<group>"; };
 		B8FD8260256BD9CE0015BAAA /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		D9CAF9DE67C2EAD11A975807 /* Pods-GotChat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GotChat.release.xcconfig"; path = "Target Support Files/Pods-GotChat/Pods-GotChat.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -138,6 +140,7 @@
 			children = (
 				B8CD5EE8259CD9860072A541 /* UserCell.swift */,
 				B8B1607625A57CD2000C95D9 /* ChatMessageCell.swift */,
+				B8F1A8D12613334B009D2DBE /* ChatInputContainerView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -275,6 +278,7 @@
 				B8B08F43255C000D00176EF4 /* SceneDelegate.swift in Sources */,
 				B8408958259BAB32000A5555 /* ChatLog+handlers.swift in Sources */,
 				B82058C42562C96C00E54158 /* User.swift in Sources */,
+				B8F1A8D22613334B009D2DBE /* ChatInputContainerView.swift in Sources */,
 				B8CD5EE9259CD9860072A541 /* UserCell.swift in Sources */,
 				B863DB8E25601615007216F0 /* NewMessageTableViewController.swift in Sources */,
 			);

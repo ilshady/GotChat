@@ -18,16 +18,16 @@ extension ChatLogController {
             keyboardHeight = keyboardFrame.height
             
             if isKeyboardShowing {
-                inputTextView.easy.layout(Bottom(keyboardHeight+8).to(view,.bottom))
+                inputContainerView.inputTextView.easy.layout(Bottom(keyboardHeight+8).to(view,.bottom))
             } else {
-                inputTextView.easy.layout(Bottom(8).to(view.safeAreaLayoutGuide,.bottom))
+                inputContainerView.inputTextView.easy.layout(Bottom(8).to(view.safeAreaLayoutGuide,.bottom))
             }
         }
     }
 }
 
 override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    inputTextView.endEditing(true)
+    inputContainerView.inputTextView.endEditing(true)
 }
     
 
@@ -37,7 +37,7 @@ override func collectionView(_ collectionView: UICollectionView, didSelectItemAt
     let fromId = Auth.auth().currentUser!.uid
     let toId = user!.id
     let timeStamp = NSNumber(value: Date().timeIntervalSince1970)
-    let values = ["text": inputTextView.text!,"fromId": fromId ,"toId": toId, "timeStamp": timeStamp] as [String : Any]
+    let values = ["text": inputContainerView.inputTextView.text!,"fromId": fromId ,"toId": toId, "timeStamp": timeStamp] as [String : Any]
 //    childRef.updateChildValues(values)
     
     childRef.updateChildValues(values) { (err, ref) in
@@ -55,24 +55,24 @@ override func collectionView(_ collectionView: UICollectionView, didSelectItemAt
         reciepientUserMessageRef.updateChildValues([messageID: true])
     }
     
-    inputTextView.text.removeAll()
+    inputContainerView.inputTextView.text.removeAll()
 }
 
 
 
 func textViewDidChange(_ textView: UITextView) {
-    if inputTextView.contentSize.height >= inputTextViewHeightConstant {
-        inputTextView.isScrollEnabled = true
+    if inputContainerView.inputTextView.contentSize.height >= inputContainerView.inputTextViewHeightConstant {
+        inputContainerView.inputTextView.isScrollEnabled = true
     } else {
-        inputTextView.isScrollEnabled = false
-        inputTextView.layoutIfNeeded()
-        inputTextView.setNeedsLayout()
+        inputContainerView.inputTextView.isScrollEnabled = false
+        inputContainerView.inputTextView.layoutIfNeeded()
+        inputContainerView.inputTextView.setNeedsLayout()
         textView.setNeedsUpdateConstraints()
     }
 }
 
 func textViewDidBeginEditing(_ textView: UITextView) {
-        inputTextView.becomeFirstResponder()
+    inputContainerView.inputTextView.becomeFirstResponder()
         if textView.textColor == .lightGray {
             textView.text = nil
             textView.textColor = .black

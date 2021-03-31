@@ -35,12 +35,12 @@ extension LoginViewController: UIImagePickerControllerDelegate,UINavigationContr
         } else {
             return
         }
-        profileImage.image = newImage
+        loginView.profileImage.image = newImage
         picker.dismiss(animated: true, completion: nil)
     }
     
     func handleLogin() {
-        guard let email = emailTextField.text, let pass = passwordTextField.text
+        guard let email = loginView.emailTextField.text, let pass = loginView.passwordTextField.text
             else {
                 print("Form is not valid")
                 return
@@ -60,7 +60,7 @@ extension LoginViewController: UIImagePickerControllerDelegate,UINavigationContr
     }
     
     @objc func handleRegister() {
-        guard let email = emailTextField.text, let pass = passwordTextField.text, let name = nameTextField.text
+        guard let email = loginView.emailTextField.text, let pass = loginView.passwordTextField.text, let name = loginView.nameTextField.text
             else {
                 print("Form is not valid")
             return
@@ -80,7 +80,7 @@ extension LoginViewController: UIImagePickerControllerDelegate,UINavigationContr
                 
                 let storageRef = Storage.storage().reference().child("profileImages").child("\(userID).png")
                 
-                if let uploadData = self.profileImage.image?.jpegData(compressionQuality: 0.1) {
+                if let uploadData = self.loginView.profileImage.image?.jpegData(compressionQuality: 0.1) {
                     storageRef.putData(uploadData, metadata: nil) { (metadata, error) in
                         if error != nil {
                             print(error!)
