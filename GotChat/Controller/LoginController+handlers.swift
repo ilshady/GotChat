@@ -17,7 +17,7 @@ extension UIColor {
     
 }
 
-extension LoginViewController: UIImagePickerControllerDelegate,UINavigationControllerDelegate {
+extension LoginViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     @objc func handleProfileImageSelect() {
         let picker = UIImagePickerController()
         picker.delegate = self
