@@ -1,6 +1,0 @@
-framework module Pods_GotChat {
-  umbrella header "Pods-GotChat-umbrella.h"
-
-  export *
-  module * { export * }
-}
