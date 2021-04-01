@@ -41,7 +41,6 @@ class NewMessageTableViewController: UITableViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    
     // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! UserCell

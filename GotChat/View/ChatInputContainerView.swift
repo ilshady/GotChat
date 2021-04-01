@@ -58,7 +58,6 @@ class ChatInputContainerView: UIView {
         
         backgroundColor = .green
         
-        
         addSubview(containerView)
                 
         containerView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
@@ -98,7 +97,6 @@ class ChatInputContainerView: UIView {
             Height(40),
             Width(80)
         )
-        
     }
     
     required init?(coder: NSCoder) {

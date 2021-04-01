@@ -9,15 +9,8 @@ import UIKit
 import Firebase
 import MBProgressHUD
 
-extension UIColor {
-    
-    convenience init(r: CGFloat, g: CGFloat, b: CGFloat) {
-        self.init(red: r/255, green: g/255, blue: b/255, alpha: 1)
-    }
-    
-}
-
 extension LoginViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
     @objc func handleProfileImageSelect() {
         let picker = UIImagePickerController()
         picker.delegate = self
@@ -61,8 +54,8 @@ extension LoginViewController: UIImagePickerControllerDelegate, UINavigationCont
     
     @objc func handleRegister() {
         guard let email = loginView.emailTextField.text, let pass = loginView.passwordTextField.text, let name = loginView.nameTextField.text
-            else {
-                print("Form is not valid")
+        else {
+            print("Form is not valid")
             return
         }
         
@@ -72,8 +65,7 @@ extension LoginViewController: UIImagePickerControllerDelegate, UINavigationCont
                 if error != nil {
                     self.showAlert(title: "Check your inputs", message: "\(error!)")
                     return
-                
-            }
+                }
                 guard let userID = Auth.auth().currentUser?.uid else {
                     return
                 }
@@ -110,7 +102,7 @@ extension LoginViewController: UIImagePickerControllerDelegate, UINavigationCont
             if err != nil {
                 print(err!)
             }
-            
+
             print("user successfully added to db")
         }
         

@@ -58,8 +58,6 @@ override func collectionView(_ collectionView: UICollectionView, didSelectItemAt
     inputContainerView.inputTextView.text.removeAll()
 }
 
-
-
 func textViewDidChange(_ textView: UITextView) {
     if inputContainerView.inputTextView.contentSize.height >= inputContainerView.inputTextViewHeightConstant {
         inputContainerView.inputTextView.isScrollEnabled = true

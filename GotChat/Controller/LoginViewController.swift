@@ -7,7 +7,6 @@
 
 import UIKit
 import EasyPeasy
-import Firebase
 import MBProgressHUD
 
 protocol LoginViewDeligate {
@@ -34,15 +33,11 @@ class LoginViewController: UIViewController, LoginViewDeligate {
         
         loginView.viewDeligate = self
         
-        view.backgroundColor = #colorLiteral(red: 0.2392156863, green: 0.3568627451, blue: 1, alpha: 1)
+        view.backgroundColor = #colorLiteral(red: 0.2392156863, green: 0.3568627451, blue: 0.5921568627, alpha: 1)
     }
     
     func registerButtonPressed() {
-        if loginView.toggle.selectedSegmentIndex == 0 {
-            handleLogin()
-        } else {
-            handleRegister()
-        }
+        loginView.toggle.selectedSegmentIndex == 0 ? handleLogin() : handleRegister()
     }
     
     func toggleChanged() {

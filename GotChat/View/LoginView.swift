@@ -32,7 +32,7 @@ class LoginView: UIView {
     let toggle: UISegmentedControl = {
         let toggle = UISegmentedControl(items: ["Login","Register"])
         toggle.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .normal)
-        toggle.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor(r: 80, g: 101, b: 161)], for: .selected)
+        toggle.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: #colorLiteral(red: 0.862745098, green: 0.862745098, blue: 0.862745098, alpha: 1) ], for: .selected)
         toggle.selectedSegmentIndex = 1
         toggle.addTarget(self, action: #selector(handleToggle), for: .valueChanged)
         return toggle
@@ -55,7 +55,7 @@ class LoginView: UIView {
     
     let nameSeparatorView: UIView = {
         let separator = UIView()
-        separator.backgroundColor = UIColor(r: 220, g: 220, b: 220)
+        separator.backgroundColor = #colorLiteral(red: 0.862745098, green: 0.862745098, blue: 0.862745098, alpha: 1)
         return separator
     }()
     
@@ -68,7 +68,7 @@ class LoginView: UIView {
     
     let emailSeparatorView: UIView = {
         let separator = UIView()
-        separator.backgroundColor = UIColor(r: 220, g: 220, b: 220)
+        separator.backgroundColor = #colorLiteral(red: 0.862745098, green: 0.862745098, blue: 0.862745098, alpha: 1)
         return separator
     }()
     
@@ -124,32 +124,34 @@ class LoginView: UIView {
             )
         
         nameTextField.easy.layout(
-            Top(0).to(inputContainerView),
-            Left(12).to(inputContainerView),
+            Top(0).to(inputContainerView,.top),
+            Left(12).to(inputContainerView,.left),
             Width(0).like(inputContainerView),
             Height(*(1/3)).like(inputContainerView).when({ self.toggle.selectedSegmentIndex == 1}),
             Height(0).when({ self.toggle.selectedSegmentIndex == 0})
         )
         nameSeparatorView.easy.layout(
-            Top(0).to(nameTextField),
+            Top(0).to(nameTextField,.bottom),
+            Left().to(inputContainerView,.left),
             Width(0).like(inputContainerView),
             Height(1)
         )
         emailTextField.easy.layout(
-            Top(0).to(nameSeparatorView),
-            Left(12).to(inputContainerView),
+            Top(0).to(nameSeparatorView,.bottom),
+            Left(12).to(inputContainerView,.left),
             Width(0).like(inputContainerView),
             Height(*(1/3)).like(inputContainerView).when({ self.toggle.selectedSegmentIndex == 1}),
             Height(*(1/2)).like(inputContainerView).when({ self.toggle.selectedSegmentIndex == 0})
         )
         emailSeparatorView.easy.layout(
-            Top(0).to(emailTextField),
+            Top(0).to(emailTextField,.bottom),
+            Left().to(inputContainerView,.left),
             Width(0).like(inputContainerView),
             Height(1)
         )
         passwordTextField.easy.layout(
             Top(0).to(emailSeparatorView,.top),
-            Left(12).to(inputContainerView),
+            Left(12).to(inputContainerView,.left),
             Width(0).like(inputContainerView),
             Height(*(1/3)).like(inputContainerView).when({ self.toggle.selectedSegmentIndex == 1}),
             Height(*(1/2)).like(inputContainerView).when({ self.toggle.selectedSegmentIndex == 0})
@@ -163,6 +165,7 @@ class LoginView: UIView {
 }
 
 extension LoginView {
+    
     @objc func handleProfileImage() {
         viewDeligate?.profileImageTapped()
     }
