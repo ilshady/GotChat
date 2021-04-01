@@ -19,6 +19,7 @@ class LoginView: UIView {
         view.layer.masksToBounds = true
         return view
     }()
+    //theres comment for testing 
     
     let registerButton: UIButton = {
         let button = UIButton()
