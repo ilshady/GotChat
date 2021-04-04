@@ -18,12 +18,6 @@ class ChatInputContainerView: UIView {
         return container
     }()
 
-    let innerContainerView: UIView = {
-        let container = UIView()
-        container.backgroundColor = .none
-        return container
-    }()
-
     let inputTextView: UITextView = {
         let input = UITextView()
         input.font = UIFont.systemFont(ofSize: 16)
@@ -59,12 +53,6 @@ class ChatInputContainerView: UIView {
         backgroundColor = .green
         
         addSubview(containerView)
-                
-        containerView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
-        containerView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        containerView.widthAnchor.constraint(equalToConstant: 44).isActive = true
-        containerView.heightAnchor.constraint(equalToConstant: 44).isActive = true
-        
         addSubview(separator)
         addSubview(inputTextView)
         addSubview(sendButton)
@@ -72,7 +60,8 @@ class ChatInputContainerView: UIView {
         containerView.easy.layout(
             Left().to(self,.left),
             Right().to(self,.right),
-            Bottom().to(self,.bottom)
+            Bottom().to(self,.bottom),
+            CenterY()
         )
         
         separator.easy.layout(
