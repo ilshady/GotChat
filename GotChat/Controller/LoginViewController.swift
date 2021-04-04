@@ -15,6 +15,11 @@ protocol LoginViewDeligate {
     func toggleChanged()
 }
 
+enum ToggleState: Int {
+    case login
+    case register
+}
+
 class LoginViewController: UIViewController, LoginViewDeligate {
     
     lazy var loginView = LoginView()
@@ -32,12 +37,12 @@ class LoginViewController: UIViewController, LoginViewDeligate {
         super.viewDidLoad()
         
         loginView.viewDeligate = self
-        
-        view.backgroundColor = #colorLiteral(red: 0.2392156863, green: 0.3568627451, blue: 0.5921568627, alpha: 1)
     }
     
     func registerButtonPressed() {
-        loginView.toggle.selectedSegmentIndex == 0 ? handleLogin() : handleRegister()
+        loginView.toggle.selectedSegmentIndex == ToggleState.login.rawValue ?
+            handleLogin() :
+            handleRegister()
     }
     
     func toggleChanged() {

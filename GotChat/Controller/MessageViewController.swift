@@ -79,31 +79,6 @@ class MessageViewController: UITableViewController {
         
     }
     
-    func observeMessages() {
-        
-        DispatchQueue.global().async {
-            let ref = Database.database().reference().child("messages")
-            ref.observe(.childAdded) { (snapshot) in
-                if let dict = snapshot.value as? NSDictionary {
-                    let fromID = dict["fromId"] as? String ?? ""
-                    let text = dict["text"] as? String ?? ""
-                    let timeStamp = dict["timeStamp"] as? NSNumber ?? 0
-                    let toID = dict["toId"] as? String ?? ""
-                    
-                    let message = Message(fromID: fromID, text: text, timeStamp: timeStamp, toID: toID)
-                    
-                    self.messageDict[toID] = message
-                    self.messages = Array(self.messageDict.values)
-                    self.messages.sort { $0.timeStamp.intValue > $1.timeStamp.intValue
-                    }
-                }
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
-            }
-        }
-    }
-    
     func loginCheck() {
             let uid = Auth.auth().currentUser?.uid
             if uid == nil {
