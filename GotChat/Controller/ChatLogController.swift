@@ -29,6 +29,7 @@ class ChatLogController: UICollectionViewController  {
         messageViewModel.messagesDeligate = self
         inputContainerView.inputTextView.delegate = self
         
+        //TO DO: put out somewhere in VIEW 
         collectionView.register(ChatMessageCell.self, forCellWithReuseIdentifier: cellId)
         collectionView.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
         collectionView.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
