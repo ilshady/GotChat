@@ -30,10 +30,6 @@ class LoginViewController: UIViewController, LoginViewDeligate {
         self.view = loginView
     }
     
-    func view() -> LoginView {
-        return self.view as! LoginView
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -41,11 +37,6 @@ class LoginViewController: UIViewController, LoginViewDeligate {
     }
     
     func registerButtonPressed() {
-        guard let email = loginView.emailTextField.text, let pass = loginView.passwordTextField.text
-            else {
-                print("Form is not valid")
-                return
-        }
         loginView.toggle.selectedSegmentIndex == ToggleState.login.rawValue ?
             handleLogin() :
             handleRegister()
@@ -59,7 +50,6 @@ class LoginViewController: UIViewController, LoginViewDeligate {
     func profileImageTapped() {
         handleProfileImageSelect()
     }
-    
 
     
     @objc func handleRegister() {

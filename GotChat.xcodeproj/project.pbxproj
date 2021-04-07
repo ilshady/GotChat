@@ -7,9 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B819A671261DE8A300C33C02 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B819A670261DE8A300C33C02 /* LoginViewModel.swift */; };
 		B81C3737261A079C007DF4BF /* MessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B81C3736261A079C007DF4BF /* MessageViewModel.swift */; };
 		B82058C42562C96C00E54158 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82058C32562C96C00E54158 /* User.swift */; };
 		B8289708257FCAB200F8BB28 /* ChatLogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8289707257FCAB200F8BB28 /* ChatLogController.swift */; };
+		B83408B9261B2646009364AD /* MessagesCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B83408B8261B2646009364AD /* MessagesCollectionView.swift */; };
 		B8408958259BAB32000A5555 /* ChatLog+handlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8408957259BAB32000A5555 /* ChatLog+handlers.swift */; };
 		B8505246256C0FB800F6D0E6 /* LoginController+handlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8505245256C0FB800F6D0E6 /* LoginController+handlers.swift */; };
 		B85AD6B525DBBA0600A824D7 /* Launch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B85AD6B425DBBA0600A824D7 /* Launch.storyboard */; };
@@ -32,9 +34,11 @@
 /* Begin PBXFileReference section */
 		6845D12EB4A125209D03B9F9 /* Pods-GotChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GotChat.debug.xcconfig"; path = "Target Support Files/Pods-GotChat/Pods-GotChat.debug.xcconfig"; sourceTree = "<group>"; };
 		8DEEE22C04C22A3C0FC5F104 /* Pods_GotChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GotChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B819A670261DE8A300C33C02 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		B81C3736261A079C007DF4BF /* MessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewModel.swift; sourceTree = "<group>"; };
 		B82058C32562C96C00E54158 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		B8289707257FCAB200F8BB28 /* ChatLogController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatLogController.swift; sourceTree = "<group>"; };
+		B83408B8261B2646009364AD /* MessagesCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesCollectionView.swift; sourceTree = "<group>"; };
 		B8408957259BAB32000A5555 /* ChatLog+handlers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatLog+handlers.swift"; sourceTree = "<group>"; };
 		B8505245256C0FB800F6D0E6 /* LoginController+handlers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoginController+handlers.swift"; sourceTree = "<group>"; };
 		B85AD6B425DBBA0600A824D7 /* Launch.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Launch.storyboard; sourceTree = "<group>"; };
@@ -148,6 +152,7 @@
 				B8CD5EE8259CD9860072A541 /* UserCell.swift */,
 				B8B1607625A57CD2000C95D9 /* ChatMessageCell.swift */,
 				B8F1A8D12613334B009D2DBE /* ChatInputContainerView.swift */,
+				B83408B8261B2646009364AD /* MessagesCollectionView.swift */,
 				B86DE8192614CA5E0026827D /* LoginView.swift */,
 			);
 			path = View;
@@ -158,6 +163,7 @@
 			children = (
 				B8F4CC75261644AF00251971 /* UserViewModel.swift */,
 				B81C3736261A079C007DF4BF /* MessageViewModel.swift */,
+				B819A670261DE8A300C33C02 /* LoginViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -287,11 +293,13 @@
 			files = (
 				B8289708257FCAB200F8BB28 /* ChatLogController.swift in Sources */,
 				B8B08F45255C000D00176EF4 /* MessageViewController.swift in Sources */,
+				B83408B9261B2646009364AD /* MessagesCollectionView.swift in Sources */,
 				B81C3737261A079C007DF4BF /* MessageViewModel.swift in Sources */,
 				B8B1607725A57CD2000C95D9 /* ChatMessageCell.swift in Sources */,
 				B8B08F41255C000D00176EF4 /* AppDelegate.swift in Sources */,
 				B8505246256C0FB800F6D0E6 /* LoginController+handlers.swift in Sources */,
 				B8F4CC76261644AF00251971 /* UserViewModel.swift in Sources */,
+				B819A671261DE8A300C33C02 /* LoginViewModel.swift in Sources */,
 				B8FD8261256BD9CE0015BAAA /* Extension.swift in Sources */,
 				B8B08F56255C44C100176EF4 /* LoginViewController.swift in Sources */,
 				B8B08F43255C000D00176EF4 /* SceneDelegate.swift in Sources */,
