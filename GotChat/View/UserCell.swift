@@ -49,7 +49,7 @@ class UserCell: UITableViewCell {
             timeLabel.text = weekDay
         }
     }
-
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         
@@ -66,7 +66,7 @@ class UserCell: UITableViewCell {
     }()
     
     let timeLabel: UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.font = .systemFont(ofSize: 13)
         label.textColor = .lightGray
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -89,11 +89,11 @@ class UserCell: UITableViewCell {
         //THE KOSTYL MADAFAKA
         [timeLabel.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -14),
          timeLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 14),
-        timeLabel.heightAnchor.constraint(equalTo: textLabel!.heightAnchor)].forEach({$0.isActive = true})
+         timeLabel.heightAnchor.constraint(equalTo: textLabel!.heightAnchor)].forEach({$0.isActive = true})
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
 }

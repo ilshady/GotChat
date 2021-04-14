@@ -30,7 +30,7 @@ class ChatMessageCell: UICollectionViewCell {
         view.layer.borderColor = UIColor.gray.cgColor
         return view
     }()
-        
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         

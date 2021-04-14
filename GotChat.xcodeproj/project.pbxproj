@@ -12,8 +12,6 @@
 		B82058C42562C96C00E54158 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82058C32562C96C00E54158 /* User.swift */; };
 		B8289708257FCAB200F8BB28 /* ChatLogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8289707257FCAB200F8BB28 /* ChatLogController.swift */; };
 		B83408B9261B2646009364AD /* MessagesCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B83408B8261B2646009364AD /* MessagesCollectionView.swift */; };
-		B8408958259BAB32000A5555 /* ChatLog+handlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8408957259BAB32000A5555 /* ChatLog+handlers.swift */; };
-		B8505246256C0FB800F6D0E6 /* LoginController+handlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8505245256C0FB800F6D0E6 /* LoginController+handlers.swift */; };
 		B85AD6B525DBBA0600A824D7 /* Launch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B85AD6B425DBBA0600A824D7 /* Launch.storyboard */; };
 		B863DB8E25601615007216F0 /* NewMessageTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B863DB8D25601615007216F0 /* NewMessageTableViewController.swift */; };
 		B86DE81A2614CA5E0026827D /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86DE8192614CA5E0026827D /* LoginView.swift */; };
@@ -24,9 +22,9 @@
 		B8B08F4A255C001000176EF4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B8B08F49255C001000176EF4 /* Assets.xcassets */; };
 		B8B08F56255C44C100176EF4 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B08F55255C44C100176EF4 /* LoginViewController.swift */; };
 		B8B1607725A57CD2000C95D9 /* ChatMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B1607625A57CD2000C95D9 /* ChatMessageCell.swift */; };
+		B8C4B6DA26260CD1006C1439 /* MessageCollectionViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C4B6D926260CD1006C1439 /* MessageCollectionViewManager.swift */; };
 		B8CD5EE9259CD9860072A541 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8CD5EE8259CD9860072A541 /* UserCell.swift */; };
 		B8F1A8D22613334B009D2DBE /* ChatInputContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F1A8D12613334B009D2DBE /* ChatInputContainerView.swift */; };
-		B8F4CC76261644AF00251971 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F4CC75261644AF00251971 /* UserViewModel.swift */; };
 		B8FD8261256BD9CE0015BAAA /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8FD8260256BD9CE0015BAAA /* Extension.swift */; };
 		CD1BF23A15E05DAE65BD4E69 /* Pods_GotChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DEEE22C04C22A3C0FC5F104 /* Pods_GotChat.framework */; };
 /* End PBXBuildFile section */
@@ -39,8 +37,6 @@
 		B82058C32562C96C00E54158 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		B8289707257FCAB200F8BB28 /* ChatLogController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatLogController.swift; sourceTree = "<group>"; };
 		B83408B8261B2646009364AD /* MessagesCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesCollectionView.swift; sourceTree = "<group>"; };
-		B8408957259BAB32000A5555 /* ChatLog+handlers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatLog+handlers.swift"; sourceTree = "<group>"; };
-		B8505245256C0FB800F6D0E6 /* LoginController+handlers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoginController+handlers.swift"; sourceTree = "<group>"; };
 		B85AD6B425DBBA0600A824D7 /* Launch.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Launch.storyboard; sourceTree = "<group>"; };
 		B863DB8D25601615007216F0 /* NewMessageTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageTableViewController.swift; sourceTree = "<group>"; };
 		B86DE8192614CA5E0026827D /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -53,9 +49,9 @@
 		B8B08F4E255C001000176EF4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B8B08F55255C44C100176EF4 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		B8B1607625A57CD2000C95D9 /* ChatMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageCell.swift; sourceTree = "<group>"; };
+		B8C4B6D926260CD1006C1439 /* MessageCollectionViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCollectionViewManager.swift; sourceTree = "<group>"; };
 		B8CD5EE8259CD9860072A541 /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		B8F1A8D12613334B009D2DBE /* ChatInputContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatInputContainerView.swift; sourceTree = "<group>"; };
-		B8F4CC75261644AF00251971 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		B8FD8260256BD9CE0015BAAA /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		D9CAF9DE67C2EAD11A975807 /* Pods-GotChat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GotChat.release.xcconfig"; path = "Target Support Files/Pods-GotChat/Pods-GotChat.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -102,10 +98,8 @@
 			children = (
 				B8B08F44255C000D00176EF4 /* MessageViewController.swift */,
 				B8B08F55255C44C100176EF4 /* LoginViewController.swift */,
-				B8505245256C0FB800F6D0E6 /* LoginController+handlers.swift */,
 				B863DB8D25601615007216F0 /* NewMessageTableViewController.swift */,
 				B8289707257FCAB200F8BB28 /* ChatLogController.swift */,
-				B8408957259BAB32000A5555 /* ChatLog+handlers.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -134,6 +128,7 @@
 			children = (
 				B8F4CC742616449300251971 /* ViewModel */,
 				B8FD8263256BD9D40015BAAA /* Helpers */,
+				B8C4B6DC2626F572006C1439 /* Managers */,
 				B8CD5EE1259CD8FC0072A541 /* View */,
 				B82058C22562C94700E54158 /* Model */,
 				B8AC6FF2255CFF4000B02969 /* Controller */,
@@ -144,6 +139,14 @@
 				B85AD6B425DBBA0600A824D7 /* Launch.storyboard */,
 			);
 			path = GotChat;
+			sourceTree = "<group>";
+		};
+		B8C4B6DC2626F572006C1439 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				B8C4B6D926260CD1006C1439 /* MessageCollectionViewManager.swift */,
+			);
+			path = Managers;
 			sourceTree = "<group>";
 		};
 		B8CD5EE1259CD8FC0072A541 /* View */ = {
@@ -161,7 +164,6 @@
 		B8F4CC742616449300251971 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				B8F4CC75261644AF00251971 /* UserViewModel.swift */,
 				B81C3736261A079C007DF4BF /* MessageViewModel.swift */,
 				B819A670261DE8A300C33C02 /* LoginViewModel.swift */,
 			);
@@ -295,16 +297,14 @@
 				B8B08F45255C000D00176EF4 /* MessageViewController.swift in Sources */,
 				B83408B9261B2646009364AD /* MessagesCollectionView.swift in Sources */,
 				B81C3737261A079C007DF4BF /* MessageViewModel.swift in Sources */,
+				B8C4B6DA26260CD1006C1439 /* MessageCollectionViewManager.swift in Sources */,
 				B8B1607725A57CD2000C95D9 /* ChatMessageCell.swift in Sources */,
 				B8B08F41255C000D00176EF4 /* AppDelegate.swift in Sources */,
-				B8505246256C0FB800F6D0E6 /* LoginController+handlers.swift in Sources */,
-				B8F4CC76261644AF00251971 /* UserViewModel.swift in Sources */,
 				B819A671261DE8A300C33C02 /* LoginViewModel.swift in Sources */,
 				B8FD8261256BD9CE0015BAAA /* Extension.swift in Sources */,
 				B8B08F56255C44C100176EF4 /* LoginViewController.swift in Sources */,
 				B8B08F43255C000D00176EF4 /* SceneDelegate.swift in Sources */,
 				B86DE81A2614CA5E0026827D /* LoginView.swift in Sources */,
-				B8408958259BAB32000A5555 /* ChatLog+handlers.swift in Sources */,
 				B82058C42562C96C00E54158 /* User.swift in Sources */,
 				B8F1A8D22613334B009D2DBE /* ChatInputContainerView.swift in Sources */,
 				B8CD5EE9259CD9860072A541 /* UserCell.swift in Sources */,

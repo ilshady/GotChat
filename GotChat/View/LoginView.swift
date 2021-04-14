@@ -8,9 +8,22 @@
 import UIKit
 import EasyPeasy
 
+protocol LoginViewDelegate {
+    func profileImageTapped()
+    func registerButtonPressed()
+    func toggleChanged()
+}
+
 class LoginView: UIView {
     
-    var viewDeligate: LoginViewDeligate?
+    var viewDelegate: LoginViewDelegate?
+    
+    let pickerView: UIImagePickerController = {
+        let picker = UIImagePickerController()
+        picker.allowsEditing = true
+        picker.modalPresentationStyle = .fullScreen
+        return picker
+    }()
     
     let inputContainerView: UIView = {
         let view = UIView()
@@ -123,7 +136,7 @@ class LoginView: UIView {
             Top(12).to(inputContainerView),
             Width(0).like(inputContainerView),
             Height(40)
-            )
+        )
         
         nameTextField.easy.layout(
             Top(0).to(inputContainerView,.top),
@@ -169,14 +182,14 @@ class LoginView: UIView {
 extension LoginView {
     
     @objc func handleProfileImage() {
-        viewDeligate?.profileImageTapped()
+        viewDelegate?.profileImageTapped()
     }
     
     @objc func handleRegisterButton() {
-        viewDeligate?.registerButtonPressed()
+        viewDelegate?.registerButtonPressed()
     }
     
     @objc func handleToggle() {
-        viewDeligate?.toggleChanged()
+        viewDelegate?.toggleChanged()
     }
 }

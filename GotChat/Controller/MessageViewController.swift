@@ -15,7 +15,7 @@ class MessageViewController: UITableViewController {
     let newMessageVC = NewMessageTableViewController()
     var messages = [Message]()
     var messageDict = [String: Message]()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(UserCell.self, forCellReuseIdentifier: "cellId")
@@ -24,34 +24,34 @@ class MessageViewController: UITableViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "compose"), style: .plain, target: self, action: #selector(handleCompose))
         
     }
-        //TO DO: fix the message duplicate problem
+    //TO DO: fix the message duplicate problem
     func observeUserMessages() {
         guard let uid = Auth.auth().currentUser?.uid else {
             return
         }
-            let ref = Database.database().reference().child("user-messages").child(uid)
-            ref.observe(.childAdded) { (snapshot) in
-                let messageID = snapshot.key
-                let messagesRef = Database.database().reference().child("messages").child(messageID)
-                messagesRef.observeSingleEvent(of: .value) { (snapshot) in
-                    if let dict = snapshot.value as? NSDictionary {
-                        let fromID = dict["fromId"] as? String ?? ""
-                        let text = dict["text"] as? String ?? ""
-                        let timeStamp = dict["timeStamp"] as? NSNumber ?? 0
-                        let toID = dict["toId"] as? String ?? ""
-                        
-                        let message = Message(fromID: fromID, text: text, timeStamp: timeStamp, toID: toID)
-                        
-                        self.messageDict[toID] = message
-                        self.messages = Array(self.messageDict.values)
-                        self.messages.sort { $0.timeStamp.intValue > $1.timeStamp.intValue
-                        }
-                    }
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
+        let ref = Database.database().reference().child("user-messages").child(uid)
+        ref.observe(.childAdded) { (snapshot) in
+            let messageID = snapshot.key
+            let messagesRef = Database.database().reference().child("messages").child(messageID)
+            messagesRef.observeSingleEvent(of: .value) { (snapshot) in
+                if let dict = snapshot.value as? NSDictionary {
+                    let fromID = dict["fromId"] as? String ?? ""
+                    let text = dict["text"] as? String ?? ""
+                    let timeStamp = dict["timeStamp"] as? NSNumber ?? 0
+                    let toID = dict["toId"] as? String ?? ""
+                    
+                    let message = Message(fromID: fromID, text: text, timeStamp: timeStamp, toID: toID)
+                    
+                    self.messageDict[toID] = message
+                    self.messages = Array(self.messageDict.values)
+                    self.messages.sort { $0.timeStamp.intValue > $1.timeStamp.intValue
                     }
                 }
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
             }
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -80,26 +80,26 @@ class MessageViewController: UITableViewController {
     }
     
     func loginCheck() {
-            let uid = Auth.auth().currentUser?.uid
-            if uid == nil {
-                self.perform(#selector(self.handleLogout), with: nil, afterDelay: 0)
-            } else {
-                Database.database().reference().child("users").child(uid!).observeSingleEvent(of: .value) { (snapshot) in
-                    if let dictionary = snapshot.value as? NSDictionary {
-                        let id = snapshot.key
-                        let name = dictionary["name"] as? String ?? ""
-                        let email = dictionary["email"] as? String ?? ""
-                        let url = dictionary["url"] as? String ?? ""
-                        
-                        let user = User(id: id, name: name, email: email, url: url)
-                        
-                        self.setupNavBar(user: user)
-                        DispatchQueue.main.async {
-                            self.navigationItem.title = dictionary["name"] as? String
-                        }
+        let uid = Auth.auth().currentUser?.uid
+        if uid == nil {
+            self.perform(#selector(self.handleLogout), with: nil, afterDelay: 0)
+        } else {
+            Database.database().reference().child("users").child(uid!).observeSingleEvent(of: .value) { (snapshot) in
+                if let dictionary = snapshot.value as? NSDictionary {
+                    let id = snapshot.key
+                    let name = dictionary["name"] as? String ?? ""
+                    let email = dictionary["email"] as? String ?? ""
+                    let url = dictionary["url"] as? String ?? ""
+                    
+                    let user = User(id: id, name: name, email: email, url: url)
+                    
+                    self.setupNavBar(user: user)
+                    DispatchQueue.main.async {
+                        self.navigationItem.title = dictionary["name"] as? String
                     }
                 }
             }
+        }
     }
     
     func setupNavBar(user: User) {
@@ -115,7 +115,7 @@ class MessageViewController: UITableViewController {
         
         let profileImageView = UIImageView()
         if let urlString = user.url {
-        profileImageView.loadImages(urlString: urlString)
+            profileImageView.loadImages(urlString: urlString)
         }
         profileImageView.contentMode = .scaleAspectFill
         profileImageView.layer.cornerRadius = 20
@@ -140,9 +140,9 @@ class MessageViewController: UITableViewController {
             Left(10).to(profileImageView),
             CenterY(0)
         )
-
+        
         self.navigationItem.titleView = titleView
-
+        
     }
     
     func showChatLogForUser(user: User) {

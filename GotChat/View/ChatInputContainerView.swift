@@ -11,13 +11,13 @@ import EasyPeasy
 class ChatInputContainerView: UIView {
     
     let inputTextViewHeightConstant: CGFloat = 130.66666666666666
-
+    
     let containerView: UIView = {
         let container = UIView()
         container.backgroundColor = .systemGroupedBackground
         return container
     }()
-
+    
     let inputTextView: UITextView = {
         let input = UITextView()
         input.font = UIFont.systemFont(ofSize: 16)
@@ -33,14 +33,14 @@ class ChatInputContainerView: UIView {
         input.isScrollEnabled = false
         return input
     }()
-
+    
     let sendButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Send", for: .normal)
         //button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
         return button
     }()
-
+    
     let separator: UIView = {
         let sep = UIView()
         sep.backgroundColor = .gray

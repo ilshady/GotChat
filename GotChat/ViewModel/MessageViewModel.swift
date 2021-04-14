@@ -8,14 +8,14 @@
 import UIKit
 import Firebase
 
-protocol UserMessagesDeligate {
+protocol UserMessagesDelegate {
     func didUpdateMessages()
 }
 
 class MessageViewModel {
     
     var messages = [Message]()
-    var messagesDeligate: UserMessagesDeligate?
+    var messagesDelegate: UserMessagesDelegate?
     
     func observeMessages(user: User?) {
         guard let uid = Auth.auth().currentUser?.uid else {
@@ -36,10 +36,10 @@ class MessageViewModel {
                     let message = Message(fromID: fromID, text: text, timeStamp: timeStamp, toID: toID)
                     
                     if message.chatPartnerId() == user?.id {
-                    self.messages.append(message)
+                        self.messages.append(message)
                         
-                        self.messagesDeligate?.didUpdateMessages()
-                    
+                        self.messagesDelegate?.didUpdateMessages()
+                        
                     }
                 }
             }
